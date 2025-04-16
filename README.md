@@ -1,7 +1,7 @@
-# Bienvenidos a Proyecto Patas Pique
+# Bienvenidos a Proyecto Patas Pirque
   <p align="center">
     <img src="https://i.imgur.com/mtQDDC9.png" alt="gestION Logo"  style="border-radius: 10px;">
-    <p align="center">¡AYUDANOS A DARLES UN HOGAR!</p>
+    <p align="center">¡AYÚDANOS A DARLES UN HOGAR!</p>
   </p>
 
 ## 📄 Descripción
