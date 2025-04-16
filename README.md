@@ -38,3 +38,38 @@ responsables.
 
 - 📄 **Swagger del Backend**  
   Accede a la documentación de la API del backend a través de [Swagger]().
+
+🗂️ Gestión de Ramas y Commits
+
+🔀 Rama base
+
+  - La rama principal para el desarrollo será develop.
+  - Todas las nuevas funcionalidades, correcciones o mejoras deben desarrollarse en ramas derivadas de develop.
+
+🌿 Ramas por funcionalidad
+
+  - Cada funcionalidad, fix o mejora debe tener su propia rama con un nombre descriptivo.
+  - Formato sugerido para nombres de ramas:
+
+    - feature/nombre-descriptivo
+    - fix/descripcion-del-arreglo
+    - folder-setup
+
+✅ Commits ordenados
+
+  Los mensajes de commit deben seguir un formato claro y conciso, que facilite el historial del proyecto.
+
+  Tipos de commit sugeridos:
+
+  - feat: Nueva funcionalidad
+  - fix: Corrección de errores
+  - docs: Cambios en la documentación
+  - style: Cambios de estilo
+
+🔄 Flujo general
+
+  1. Crear un nueva rama desde develop.
+  2. Realizar los cambios necesarios y hacer commits con mensajes claros.
+  3. Hacer push de la rama al repositorio remoto.
+  4. Crear un Pull Request hacia develop.
+
