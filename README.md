@@ -73,3 +73,9 @@ responsables.
   3. Hacer push de la rama al repositorio remoto.
   4. Crear un Pull Request hacia develop.
 
+## 👥 Contribuyentes
+
+- 👩‍💻 Nombre 1 – Frontend Lead
+- 👨‍💻 Christian Martínez – Frontend Developer
+- 👩‍💻 Nombre 2 – Backend Developer
+- 👨‍💻 Nombre 3 – UX/UI
