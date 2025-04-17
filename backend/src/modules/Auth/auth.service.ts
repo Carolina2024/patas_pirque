@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, BadRequestException } from '@nestjs/common';
+import { ConflictException, Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from '../User/user.entity';
@@ -17,21 +17,21 @@ export class AuthService {
   //* POST/AUTH/LOGIN
   async getLogin(data: LoginUserDto) {
     if (!data?.email){
-      throw new BadRequestException(`Email required`);
+      throw new BadRequestException(`Correo requerido`);
     }
     const user = await this.usersRepository.findOne({
       where: { email: data.email },
     });
     if (!user) {
-      throw new BadRequestException(`User not found`);
+      throw new BadRequestException(`Usuario no encontrado`);
     }
     if (!user.password) {
-      throw new BadRequestException(`Password required`);
+      throw new UnauthorizedException(`Contraseña requerida`);
     }
     const validPassword = data.password === user.password;
 
     if (!validPassword) {
-      throw new BadRequestException(`Invalidate credentials`);
+      throw new BadRequestException(`Credenciales inválidas`);
     }
     //generar token
     const userPayload = {
@@ -39,7 +39,7 @@ export class AuthService {
       id: user.id,
       email: user.email,
     };
-    const token = this.jwtService.sign(userPayload);
+    const token = await this.jwtService.signAsync(userPayload);
 
     return { message: 'User logged in successfully', token };
   }
