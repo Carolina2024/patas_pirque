@@ -14,9 +14,10 @@ const config = {
   password: process.env.DB_PASSWORD,
   autoLoadEntities: true,
   entities: [Users],
+  synchronize: true,
+  ssl: true,     /* Descomentar si se desea probar con la base de datos en Render */
   //entities:['dist/**/*.entity{.ts,.js}'],
   //migrations: ['dist/migrations/*{.ts,.js}'],
-  synchronize: true,
   //logging: true,
   //dropSchema: true,
    ssl: {

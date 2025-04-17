@@ -14,13 +14,13 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   //* POST/AUTH/SIGNIN
-  @Post('signin')
+  @Post('login')
   @HttpCode(201)
   userLogin(@Body() data: LoginUserDto) {
     try {
       return this.authService.getLogin(data);
     } catch {
-      throw new BadRequestException('Error al loguear');
+      throw new BadRequestException('Login error');
     }
   }
 
