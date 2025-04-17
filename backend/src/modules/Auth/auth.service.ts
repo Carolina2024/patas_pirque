@@ -13,6 +13,9 @@ export class AuthService {
   ) {}
   //* POST/AUTH/LOGIN
   async getLogin(data: LoginUserDto) {
+    if (!data?.email){
+      throw new BadRequestException(`Email required`);
+    }
     const user = await this.usersRepository.findOne({
       where: { email: data.email },
     });
