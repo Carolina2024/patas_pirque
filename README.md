@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 # Proyecto Patas Pirque
-=======
 # Bienvenidos a Proyecto Patas Pirque
   <p align="center">
     <img src="https://i.imgur.com/mtQDDC9.png" alt="gestION Logo"  style="border-radius: 10px;">
@@ -82,5 +80,7 @@ responsables.
 - 👨‍💻 Christian Martínez – Frontend Developer
 - 👩‍💻 Luis Angel Quispen Navarro – Frontend Developer
 - 👨‍💻 Paola Chaves – Frontend Developer
+- 👩‍💻 Eduardo Ismael Fuentes – Frontend Developer
+- 👩‍💻 Nombre 2 – Backend Developer
+- 👨‍💻 Nombre 3 – UX/UI
 - Adopción de mascotas
->>>>>>> 8b71c0c4e36e523d357a55cfd298d205976e1b8c
