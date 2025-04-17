@@ -79,3 +79,4 @@ responsables.
 - 👨‍💻 Christian Martínez – Frontend Developer
 - 👩‍💻 Nombre 2 – Backend Developer
 - 👨‍💻 Nombre 3 – UX/UI
+- Adopción de mascotas
