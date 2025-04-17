@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { UserModule } from './modules/User/user.module';
 import typeOrmConfig from './config/typeorm.config';
 import { AuthModule } from './modules/Auth/auth.module';
 
@@ -17,6 +18,7 @@ import { AuthModule } from './modules/Auth/auth.module';
         return config;
       },
     }),
+    UserModule,
     AuthModule
   ],
   controllers: [],

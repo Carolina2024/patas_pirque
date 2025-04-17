@@ -15,7 +15,7 @@ const config = {
   autoLoadEntities: true,
   entities: [Users],
   synchronize: true,
-  ssl: true,     /* Descomentar si se desea probar con la base de datos en Render */
+  ssl: true,
   //entities:['dist/**/*.entity{.ts,.js}'],
   //migrations: ['dist/migrations/*{.ts,.js}'],
   //logging: true,
