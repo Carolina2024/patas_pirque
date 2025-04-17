@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
-import { Users } from 'src/modules/user/user.entity';
+import { Users } from 'src/modules/User2/user.entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 dotenvConfig({ path: '.env' });
@@ -15,14 +15,11 @@ const config = {
   autoLoadEntities: true,
   entities: [Users],
   synchronize: true,
-  ssl: true,     /* Descomentar si se desea probar con la base de datos en Render */
+  ssl: true,
   //entities:['dist/**/*.entity{.ts,.js}'],
   //migrations: ['dist/migrations/*{.ts,.js}'],
   //logging: true,
   //dropSchema: true,
-   ssl: {
-    rejectUnauthorized: false,
-  },
 };
 export default registerAs('typeorm', () => config);
 export const connectionSource = new DataSource(config as DataSourceOptions);

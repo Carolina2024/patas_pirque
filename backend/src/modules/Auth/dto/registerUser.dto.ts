@@ -2,14 +2,14 @@ import { IsEmail, IsNotEmpty, IsString, MinLength, Validate } from "class-valida
 
 export class RegisterUserDto {
   @IsString()
-  @IsNotEmpty({message: 'Name is required '})
+  @IsNotEmpty({message: 'El nombre es requerido'})
   name!: string;
 
   @IsEmail()
-  @Validate(() => ({ message: 'Invalid email' }))
+  @Validate(() => ({ message: 'Correo inválido' }))
   email!: string;
 
   @IsString()
-  @MinLength(6, {message: "Password most be '6' characters long "})
+  @MinLength(6, {message: "La contraseña debe ser de al menos 6 caracteres"})
   password!: string;
 }
