@@ -78,9 +78,9 @@ responsables.
 
 ## 👥 Contribuyentes
 
-- 👩‍💻 Nombre 1 – Frontend Lead
+- 👩‍💻 Carolina Castillo 1 – Frontend Lead
 - 👨‍💻 Christian Martínez – Frontend Developer
-- 👩‍💻 Nombre 2 – Backend Developer
-- 👨‍💻 Nombre 3 – UX/UI
+- 👩‍💻 Luis Angel Quispen Navarro – Frontend Developer
+- 👨‍💻 Paola Chaves – Frontend Developer
 - Adopción de mascotas
 >>>>>>> 8b71c0c4e36e523d357a55cfd298d205976e1b8c
