@@ -1,7 +1,0 @@
-DB_PASSWORD=ChXQUmxwW1RKs4Ralgvu8y9QYeMLx2OU
-DB_DATABASE=petsdb_svm4
-DB_HOST=dpg-d00gpspr0fns73e97krg-a.virginia-postgres.render.com
-DB_PORT=5432
-DB_USERNAME=backend
-
-JWT_SECRET=PaTaSP!RqU3F00
