@@ -26,7 +26,7 @@ responsables.
 
 | **Front-End**       | **Back-End**       | **UX/UI**       | **Base de datos** | **Gestión** |
 |---------------------|--------------------|-----------------|-------------------|-------------|
-| React               | TypeScript         | Figma           | Postgre           | Git         |
+| React               | TypeScript         | Figma           | PostgreSQL        | Git         |
 | JavaScript          | Node.js            |                 |                   |             |
 | CSS                 | Nest               |                 |                   |             |
 | Tailwind            |                    |                 |                   |             |
