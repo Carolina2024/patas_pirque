@@ -1,13 +1,22 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PublicLayout from "./components/PublicLayout";
+import Home from "./pages/Home"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import "./App.css";
+
 function App() {
-
   return (
-    <>
-      <h1 className='text-3xl font-bold text-primary font-primary m-10'>Welcome to Patas Pirque</h1>
-      <h2>Adopción de mascotas</h2>
-    </>
-  )
-
+    <Router>
+      <Routes>
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
-
+export default App;
