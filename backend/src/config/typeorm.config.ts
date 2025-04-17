@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
-import { Users } from 'src/modules/User/user.entity';
+import { Users } from 'src/modules/user/user.entity';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 dotenvConfig({ path: '.env' });
@@ -19,6 +19,9 @@ const config = {
   synchronize: true,
   //logging: true,
   //dropSchema: true,
+   ssl: {
+    rejectUnauthorized: false,
+  },
 };
 export default registerAs('typeorm', () => config);
 export const connectionSource = new DataSource(config as DataSourceOptions);

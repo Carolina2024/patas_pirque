@@ -6,7 +6,8 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginUserDto } from './loginUser.dto';
+import { LoginUserDto } from './dto/loginUser.dto';
+import { RegisterUserDto } from './dto/registerUser.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -22,4 +23,10 @@ export class AuthController {
       throw new BadRequestException('Error al loguear');
     }
   }
+
+  @Post('register')
+  @HttpCode(201)
+  create(@Body() registerUserDto:RegisterUserDto ){
+          return this.authService.register(registerUserDto);
+      }
 }
