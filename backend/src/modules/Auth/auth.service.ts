@@ -1,11 +1,11 @@
 import { ConflictException, Injectable, BadRequestException } from '@nestjs/common';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Users } from '../User2/user.entity';
+import { Users } from '../User/user.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from './dto/registerUser.dto';
-import { UserService } from '../User2/user.service';
+import { UserService } from '../User/user.service';
 
 @Injectable()
 export class AuthService {
