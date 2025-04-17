@@ -1,5 +1,4 @@
-// components/PublicLayout.jsx
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
 function PublicLayout() {
   return (
