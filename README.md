@@ -76,8 +76,10 @@ responsables.
 
 ## 👥 Contribuyentes
 
-- 👩‍💻 Nombre 1 – Frontend Lead
+- 👩‍💻 Carolina Castillo 1 – Frontend Lead
 - 👨‍💻 Christian Martínez – Frontend Developer
+- 👩‍💻 Luis Angel Quispen Navarro – Frontend Developer
+- 👨‍💻 Paola Chaves – Frontend Developer
 - 👩‍💻 Eduardo Ismael Fuentes – Frontend Developer
 - 👩‍💻 Nombre 2 – Backend Developer
 - 👨‍💻 Nombre 3 – UX/UI

@@ -3,6 +3,7 @@ import PublicLayout from "./components/PublicLayout";
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
+import UserList from "./components/UserList"
 import "./App.css";
 
 function App() {
@@ -15,8 +16,14 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
       </Routes>
+
+   <div>
+      <h1>hello</h1>
+      <UserList />
+    </div>
     </Router>
   );
 }
 
 export default App;
+
