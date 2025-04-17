@@ -1,12 +1,12 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength, Validate } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
 
 export class RegisterUserDto {
-  @IsString({message: "El nombre debe ser una cadena de caracteres"})
+  @IsString()
   @IsNotEmpty({message: 'El nombre es requerido'})
   name!: string;
 
-  @IsEmail()
-  @Validate(() => ({ message: 'Correo inválido' }))
+  @IsEmail({}, {message: "Ingrese un correo con un formato válido"})
+  @IsNotEmpty({message: "El correo es requerido"})
   email!: string;
 
   @IsString({message: "La contraseña debe ser una cadena de caracteres"})
