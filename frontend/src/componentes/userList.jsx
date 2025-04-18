@@ -7,7 +7,7 @@ const UserList = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <ul className="list-disc pl-5 text-lg mx-10">
+    <ul className="list-disc pl-5 text-lg mx-10 text-tertiary font-semibold">
       {data.map((user) => (
         <li key={user.id}>{user.name}</li>
       ))}

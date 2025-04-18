@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { registerUser } from "../api/user"; 
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { registerUser } from "../api/user";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +15,7 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [registroExitoso, setRegistroExitoso] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,43 +28,70 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-    try {
-      const response = await registerUser(formData);
-      console.log("Registro exitoso:", response);
-
-      if (response.token) {
-        localStorage.setItem("token", response.token);
-        alert("¡Registro exitoso!");
-       
-      }
-    } catch (error) {
-      console.error("Error en el registro:", error.message);
-      alert("Ocurrió un error al registrarse: " + error.message);
-    }
-
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      setRegistroExitoso(false);
-    } else {
-      setErrors({});
-      setRegistroExitoso(true);
-      console.log("Datos del registro:", formData);
+      return;
+    }
 
-      setFormData({
-        name: "",
-        lastName: "",
-        birthDate: "",
-        dni: "",
-        gender: "",
-        email: "",
-        password: "",
+    setErrors({});
+
+    try {
+      // Mostrando el spinner de carga
+      Swal.fire({
+        title: "Registrando usuario...",
+        text: "Por favor espera un momento",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
       });
 
-      setTimeout(() => {
-        setRegistroExitoso(false);
-      }, 5000);
+      // Timeout simulado para mostrar el spinner
+      setTimeout(async () => {
+        const response = await registerUser(formData);
+        console.log("Registro exitoso:", response);
+
+        // Almacenando el token en localStorage
+        if (response.token) {
+          localStorage.setItem("token", response.token);
+        }
+
+        Swal.close(); // Cerrar spinner
+
+        //Alerta de registro exitoso
+        Swal.fire({
+          title: "¡Registro exitoso!",
+          text: "Ahora puedes iniciar sesión",
+          icon: "success",
+          confirmButtonText: "Ir a Iniciar Sesión",
+          confirmButtonColor: "#FAAB75",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          }
+        });
+
+        // Limpiamos formulario
+        setFormData({
+          name: "",
+          lastName: "",
+          birthDate: "",
+          dni: "",
+          gender: "",
+          email: "",
+          password: "",
+        });
+
+      }, 2000);
+    } catch (error) {
+      Swal.close();
+      console.error("Error en el registro:", error.message);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ocurrió un error al registrarse: " + error.message,
+      });
     }
   };
 
@@ -86,73 +115,76 @@ const Register = () => {
     }
 
     return newErrors;
-
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="m-10 flex items-center justify-center bg-secundary">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+        <h2 className="text-2xl font-bold mb-6 text-center text-tertiary">
           Regístrate
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            
+            {/* Nombre */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Nombre:</label>
+              <label className="block text-tertiary font-semibold mb-1">Nombre:</label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
               {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
 
+            {/* Apellido */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Apellido:</label>
+              <label className="block text-tertiary font-semibold mb-1">Apellido:</label>
               <input
                 type="text"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
               {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
             </div>
 
+            {/* Nacimiento */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Fecha de nacimiento:</label>
+              <label className="block text-tertiary font-semibold mb-1">Fecha de nacimiento:</label>
               <input
                 type="date"
                 name="birthDate"
                 value={formData.birthDate}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
               {errors.birthDate && <p className="text-red-500 text-sm">{errors.birthDate}</p>}
             </div>
 
+            {/* DNI */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Documento:</label>
+              <label className="block text-tertiary font-semibold mb-1">DNI:</label>
               <input
                 type="text"
                 name="dni"
                 value={formData.dni}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
               {errors.dni && <p className="text-red-500 text-sm">{errors.dni}</p>}
             </div>
 
+            {/* Género */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Género:</label>
+              <label className="block text-tertiary font-semibold mb-1">Género:</label>
               <select
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border font-medium text-tertiary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="">Seleccione</option>
                 <option value="Femenino">Femenino</option>
@@ -162,57 +194,28 @@ const Register = () => {
               {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
             </div>
 
-
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">
-                Teléfono:
-              </label>
-              <input
-                type="tel"
-                name="telefono"
-                value={formData.telefono}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-
+            {/* Email */}
             <div className="md:col-span-2">
-              <label className="block text-gray-700 font-medium mb-1">
-                Dirección:
-              </label>
-              <input
-                type="text"
-                name="direccion"
-                value={formData.direccion}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-
-
-
-            <div className="md:col-span-2">
-              <label className="block text-gray-700 font-medium mb-1">Correo electrónico:</label>
+              <label className="block text-tertiary font-semibold mb-1">Correo electrónico:</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
               {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
 
+            {/* Password */}
             <div className="md:col-span-2">
-              <label className="block text-gray-700 font-medium mb-1">Contraseña:</label>
+              <label className="block text-tertiary font-semibold mb-1">Contraseña:</label>
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
@@ -220,16 +223,10 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+            className="w-full bg-tertiary text-white py-3 px-4 rounded-lg hover:bg-primary transition-colors cursor-pointer"
           >
             Registrarse
           </button>
-
-          {registroExitoso && (
-            <div className="mt-4 text-green-600 font-medium text-center">
-              ¡Registro exitoso! 🎉
-            </div>
-          )}
         </form>
       </div>
     </div>
@@ -237,7 +234,3 @@ const Register = () => {
 };
 
 export default Register;
-
-
-
-

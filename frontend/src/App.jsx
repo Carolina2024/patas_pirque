@@ -6,6 +6,8 @@ import Register from "./views/Register";
 import Navbar from "./layout/NavBar";
 import PublicLayout from "./componentes/PublicLayout";
 import NotFound from "./views/NotFound";
+import Dashboard from "./views/Dashboard";
+import PrivateRoute from "./componentes/PrivateRoute";
 
 function App() {
   return (
@@ -16,6 +18,17 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/* Ruta del Dashboard protegida*/}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
