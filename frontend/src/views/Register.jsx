@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { registerUser } from "../api/user"; 
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -21,9 +22,22 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos del registro:", formData);
+
+    try {
+      const response = await registerUser(formData);
+      console.log("Registro exitoso:", response);
+
+      if (response.token) {
+        localStorage.setItem("token", response.token);
+        alert("¡Registro exitoso!");
+       
+      }
+    } catch (error) {
+      console.error("Error en el registro:", error.message);
+      alert("Ocurrió un error al registrarse: " + error.message);
+    }
   };
 
   return (
@@ -34,6 +48,7 @@ const Register = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
             <div>
               <label className="block text-gray-700 font-medium mb-1">
                 Nombre:
@@ -47,6 +62,7 @@ const Register = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
+
             <div>
               <label className="block text-gray-700 font-medium mb-1">
                 Apellido:
@@ -60,6 +76,7 @@ const Register = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
+
             <div>
               <label className="block text-gray-700 font-medium mb-1">
                 Fecha de nacimiento:
@@ -73,6 +90,7 @@ const Register = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
+
             <div>
               <label className="block text-gray-700 font-medium mb-1">
                 Documento de identidad:
@@ -86,6 +104,7 @@ const Register = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
+
             <div>
               <label className="block text-gray-700 font-medium mb-1">
                 Género:
@@ -103,6 +122,7 @@ const Register = () => {
                 <option value="Otro">Otro</option>
               </select>
             </div>
+
             <div>
               <label className="block text-gray-700 font-medium mb-1">
                 Teléfono:
@@ -116,6 +136,7 @@ const Register = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
+
             <div className="md:col-span-2">
               <label className="block text-gray-700 font-medium mb-1">
                 Dirección:
@@ -129,6 +150,7 @@ const Register = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
+
             <div className="md:col-span-2">
               <label className="block text-gray-700 font-medium mb-1">
                 Correo electrónico:
@@ -142,6 +164,7 @@ const Register = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
             </div>
+
             <div className="md:col-span-2">
               <label className="block text-gray-700 font-medium mb-1">
                 Contraseña:
@@ -156,6 +179,7 @@ const Register = () => {
               />
             </div>
           </div>
+
           <button
             type="submit"
             className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors cursor-pointer"
