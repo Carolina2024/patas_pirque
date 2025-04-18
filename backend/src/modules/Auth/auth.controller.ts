@@ -8,6 +8,7 @@ import {
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { RegisterUserDto } from './dto/registerUser.dto';
+import { Public } from './decorators/public.decorator'; 
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -55,6 +56,7 @@ export class AuthController {
       statusCode: 401,
     },
   })
+  @Public()  
   @Post('login')
   @HttpCode(200)
   userLogin(@Body() data: LoginUserDto) {
@@ -99,6 +101,7 @@ export class AuthController {
       statusCode: 409,
     },
   })
+  @Public()    
   @Post('register')
   @HttpCode(201)
   create(@Body() registerUserDto: RegisterUserDto) {
