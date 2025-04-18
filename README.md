@@ -37,7 +37,7 @@ responsables.
   El frontend está desplegado y disponible en [xxxxx]().
 
 - 📄 **Swagger del Backend**  
-  Accede a la documentación de la API del backend a través de [Swagger]().
+  Accede a la documentación de la API del backend a través de [Swagger](https://patas-pirque.onrender.com/docs).
 
 🗂️ Gestión de Ramas y Commits
 
