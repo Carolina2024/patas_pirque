@@ -1,8 +1,13 @@
+
 import { useState } from "react";
+import { loginUser } from "../api/user";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+
   const [errors, setErrors] = useState({});
   const [bienvenida, setBienvenida] = useState(false);
 
@@ -24,8 +29,24 @@ const Login = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setError("");
+
+    try {
+      const data = await loginUser({ email, password });
+
+     
+      localStorage.setItem("token", data.token);
+
+      console.log("Usuario logueado:", data);
+      
+    } catch (err) {
+      setError(err.message);
+      console.error("Error al iniciar sesión:", err);
+
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -40,6 +61,7 @@ const Login = () => {
       setPassword("");
 
       setTimeout(() => setBienvenida(false), 5000);
+
     }
   };
 
@@ -50,6 +72,11 @@ const Login = () => {
           Iniciar sesión
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="bg-red-100 text-red-600 p-2 rounded">
+              {error}
+            </div>
+          )}
           <div>
             <label className="block text-gray-700 font-medium mb-1">Email:</label>
             <input

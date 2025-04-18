@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { registerUser } from "../api/user"; 
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -22,8 +23,24 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+
+    try {
+      const response = await registerUser(formData);
+      console.log("Registro exitoso:", response);
+
+      if (response.token) {
+        localStorage.setItem("token", response.token);
+        alert("¡Registro exitoso!");
+       
+      }
+    } catch (error) {
+      console.error("Error en el registro:", error.message);
+      alert("Ocurrió un error al registrarse: " + error.message);
+    }
+
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -69,6 +86,7 @@ const Register = () => {
     }
 
     return newErrors;
+
   };
 
   return (
@@ -79,6 +97,7 @@ const Register = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
             <div>
               <label className="block text-gray-700 font-medium mb-1">Nombre:</label>
               <input
@@ -143,6 +162,37 @@ const Register = () => {
               {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
             </div>
 
+
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Teléfono:
+              </label>
+              <input
+                type="tel"
+                name="telefono"
+                value={formData.telefono}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-gray-700 font-medium mb-1">
+                Dirección:
+              </label>
+              <input
+                type="text"
+                name="direccion"
+                value={formData.direccion}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+
+
+
             <div className="md:col-span-2">
               <label className="block text-gray-700 font-medium mb-1">Correo electrónico:</label>
               <input
@@ -187,5 +237,7 @@ const Register = () => {
 };
 
 export default Register;
+
+
 
 
