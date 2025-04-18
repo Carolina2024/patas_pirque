@@ -20,4 +20,6 @@ export class Users {
   password!: string;
   @Column({default: 'user'})
   role!: string;
+  @Column({default: true})
+  isActive!: boolean;
 }

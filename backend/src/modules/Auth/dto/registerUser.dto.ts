@@ -1,4 +1,4 @@
-import { IsDateString, IsEmail, IsEmpty, IsIn, IsNotEmpty, IsOptional, IsString, Length, Matches } from "class-validator";
+import { IsBoolean, IsDateString, IsEmail, IsEmpty, IsIn, IsNotEmpty, IsOptional, IsString, Length, Matches } from "class-validator";
 
 export class RegisterUserDto {
   @IsString()
@@ -34,4 +34,8 @@ export class RegisterUserDto {
   @IsOptional()
   @IsIn(['user', 'admin'], { message: 'El rol debe ser user o admin' })
   role?: string;
+
+  @IsOptional()
+  @IsBoolean({message: 'isActive debe ser verdadero o falso'})
+  isActive?: boolean;
 }

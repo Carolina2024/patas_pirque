@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, BadRequestException, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from '../User/user.entity';
@@ -50,6 +50,14 @@ export class AuthService {
      if(existingUser){
        throw new ConflictException('El usuario ingresado ya se encuentra registrado.');
      }
+
+     if(registerUserDto.role && registerUserDto.role !== "user"){
+      throw new ForbiddenException('Solo pueden registrarse con el rol user');
+    }
+
+    if(registerUserDto.isActive === false){
+      throw new BadRequestException('No se puede ingresar un usuario eliminado');
+    }
 
      return this.userService.create(registerUserDto);
 
