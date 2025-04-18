@@ -4,6 +4,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UserModule } from './modules/User/user.module';
 import typeOrmConfig from './config/typeorm.config';
 import { AuthModule } from './modules/Auth/auth.module';
+import { PetsModule } from './modules/Pets/pets.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { AuthModule } from './modules/Auth/auth.module';
       },
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    PetsModule
   ],
   controllers: [],
   providers: [],
