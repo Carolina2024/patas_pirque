@@ -1,6 +1,6 @@
 
 const API_URL = "https://patas-pirque.onrender.com/auth";
-
+//
 
 export const registerUser = async (data) => {
   const res = await fetch(`${API_URL}/register`, {
