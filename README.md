@@ -73,13 +73,26 @@ responsables.
   3. Hacer push de la rama al repositorio remoto.
   4. Crear un Pull Request hacia develop.
 
-## 👥 Contribuyentes
+## 🧑‍🤝‍🧑 Equipo de Trabajo
 
-- 👩‍💻 Carolina Castillo 1 – Frontend Lead
-- 👨‍💻 Christian Martínez – Frontend Developer
-- 👩‍💻 Luis Angel Quispen Navarro – Frontend Developer
-- 👨‍💻 Paola Chaves – Frontend Developer
-- 👩‍💻 Eduardo Ismael Fuentes – Frontend Developer
-- 👩‍💻 Nombre 2 – Backend Developer
-- 👨‍💻 Nombre 3 – UX/UI
-- Adopción de mascotas
+### ⚛️ Frontend
+
+| Nombre            | GitHub                                                                                  | LinkedIn                                                                                      |
+|-------------------|-----------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| Carolina Castillo | [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/Carolina2024)   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+| Ingrid Chaves     | [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/paochaves )   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+| Luis Angel        | [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/LuiangDev)   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+| Eduardo Ismael    | [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/Ismael-dev-v2)   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+| Christian Martínez| [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/Xhan88 )   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+
+### ⚛️ Backend
+
+| Nombre            | GitHub                                                                                  | LinkedIn                                                                                      |
+|-------------------|-----------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|
+| Miriam Bautista   | [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/anibau )   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+| Diana Sanabria    | [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/diana180102)   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+| Angel Añez        | [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/AngelAnez)   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+| Ricardo Quejuan   | [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/quejuan52)   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+| Sonny Pimente     | [![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/spimentel1201)   | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=white)]()   |
+
+
