@@ -26,12 +26,12 @@ export class AuthService {
       throw new BadRequestException(`Usuario no encontrado`);
     }
     if (!user.password) {
-      throw new UnauthorizedException(`Contraseña requerida`);
+      throw new BadRequestException(`Contraseña requerida`);
     }
     const validPassword = data.password === user.password;
 
     if (!validPassword) {
-      throw new BadRequestException(`Credenciales inválidas`);
+      throw new UnauthorizedException(`Credenciales inválidas`);
     }
     //generar token
     const userPayload = {
@@ -41,14 +41,14 @@ export class AuthService {
     };
     const token = await this.jwtService.signAsync(userPayload);
 
-    return { message: 'User logged in successfully', token };
+    return { message: 'Se ha iniciado sesión exitosamente.', token };
   }
 
   async register(registerUserDto: RegisterUserDto){
      
      const existingUser = await this.userService.findByEmail(registerUserDto.email);
      if(existingUser){
-       throw new ConflictException('User already existing');
+       throw new ConflictException('El usuario ingresado ya se encuentra registrado.');
      }
 
      return this.userService.create(registerUserDto);
