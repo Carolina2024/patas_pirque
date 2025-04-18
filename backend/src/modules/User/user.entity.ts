@@ -5,9 +5,21 @@ export class Users {
   @PrimaryGeneratedColumn()
   id!: string;
   @Column()
-  name?: string;
+  name!: string;
   @Column()
-  email?: string;
+  lastName?: string;
   @Column()
-  password?: string;
+  birthDate?: string;
+  @Column()
+  dni!: string;
+  @Column()
+  gender!: string;
+  @Column({unique: true})
+  email!: string;
+  @Column()
+  password!: string;
+  @Column({default: 'user'})
+  role!: string;
+  @Column({default: true})
+  isActive!: boolean;
 }
