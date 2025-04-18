@@ -1,4 +1,6 @@
+import { Ages } from "src/common/enums/ages.enum";
 import { Size } from "src/common/enums/sizes.enum";
+import { Species } from "src/common/enums/species.enum";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('pets')
@@ -12,11 +14,17 @@ export class Pets {
     @Column()
     race!: string;
     
-    @Column()
-    age!: string;
+    @Column({
+        type: 'enum',
+        enum: Ages
+    })
+    age!: Ages;
     
-    @Column()
-    species!: string;
+    @Column({
+        type: 'enum',
+        enum: Species
+    })
+    species!: Species;
     
     @Column({
         type: 'enum',
