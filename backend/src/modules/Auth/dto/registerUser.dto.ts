@@ -1,4 +1,4 @@
-import { IsDateString, IsEmail, IsIn, IsNotEmpty, IsString, Length, Matches } from "class-validator";
+import { IsDateString, IsEmail, IsEmpty, IsIn, IsNotEmpty, IsOptional, IsString, Length, Matches } from "class-validator";
 
 export class RegisterUserDto {
   @IsString()
@@ -31,4 +31,7 @@ export class RegisterUserDto {
   })
   password!: string;
 
+  @IsOptional()
+  @IsIn(['user', 'admin'], { message: 'El rol debe ser user o admin' })
+  role?: string;
 }

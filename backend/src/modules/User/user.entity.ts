@@ -18,4 +18,6 @@ export class Users {
   email!: string;
   @Column()
   password!: string;
+  @Column({default: 'user'})
+  role!: string;
 }
