@@ -2,8 +2,9 @@
 
 @theme {
   --font-primary: Poppins, sans-serif;
-  --color-primary: #3ab7bf;
+  --color-primary: #FAAB75;
   --color-secundary: #F3F3F3;
+  --color-tertiary: #595146;
   /* ... */
 }
 @layer base {

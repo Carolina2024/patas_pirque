@@ -1,15 +1,15 @@
-
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { loginUser } from "../api/user";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [error, setError] = useState("");
-
   const [errors, setErrors] = useState({});
-  const [bienvenida, setBienvenida] = useState(false);
+
+  const navigate = useNavigate();
 
   const validate = () => {
     const newErrors = {};
@@ -29,86 +29,112 @@ const Login = () => {
     return newErrors;
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setError("");
-
-    try {
-      const data = await loginUser({ email, password });
-
-     
-      localStorage.setItem("token", data.token);
-
-      console.log("Usuario logueado:", data);
-      
-    } catch (err) {
-      setError(err.message);
-      console.error("Error al iniciar sesión:", err);
 
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      setBienvenida(false);
-    } else {
-      setErrors({});
-      setBienvenida(true);
-      console.log("Email:", email);
-      console.log("Password:", password);
+      return;
+    }
 
-      setEmail("");
-      setPassword("");
+    try {
+      // Mostrando el spinner de carga
+      Swal.fire({
+        title: "Iniciando sesión...",
+        text: "Por favor espera un momento",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
 
-      setTimeout(() => setBienvenida(false), 5000);
+      // Timeout simulado para mostrar el spinner
+      setTimeout(async () => {
+        const data = await loginUser({ email, password });
 
+        localStorage.setItem("token", data.token);
+        if (data.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
+        }
+
+        console.log("Usuario logueado:", data);
+
+        setErrors({});
+        setEmail("");
+        setPassword("");
+
+        Swal.close(); // Cerrar spinner
+
+        //Alerta de inicio de sesión exitoso
+        Swal.fire({
+          title: "¡Inicio de sesión exitoso!",
+          text: "Bienvenido/a a Patas Pirque",
+          icon: "success",
+          confirmButtonText: "Aceptar",
+          confirmButtonColor: "#FAAB75",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/dashboard");
+          }
+        });
+      }, 2000);
+    } catch (err) {
+      Swal.close(); // cerrar spinner si hay error
+      setError(err.message);
+      console.error("Error al iniciar sesión:", err);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="m-10 flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+        <h2 className="text-2xl font-bold mb-6 text-center text-tertiary">
           Iniciar sesión
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="bg-red-100 text-red-600 p-2 rounded">
-              {error}
-            </div>
+            <div className="bg-red-100 text-red-600 p-2 rounded">{error}</div>
           )}
+
+          {/* Email */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Email:</label>
+            <label className="block text-tertiary font-semibold mb-1">
+              Email:
+            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email}</p>
+            )}
           </div>
+
+          {/* Contraseña */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">Contraseña:</label>
+            <label className="block text-tertiary font-semibold mb-1">
+              Contraseña:
+            </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password}</p>
+            )}
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+            className="w-full bg-tertiary text-white font-semibold py-3 px-4 rounded-lg hover:bg-primary transition-colors cursor-pointer"
           >
             Ingresar
           </button>
-
-          {bienvenida && (
-            <div className="mt-4 text-green-600 text-center font-medium">
-              ¡Bienvenido/a! 🎉
-            </div>
-          )}
         </form>
       </div>
     </div>
@@ -116,4 +142,3 @@ const Login = () => {
 };
 
 export default Login;
-
