@@ -3,16 +3,17 @@ import { registerUser } from "../api/user";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    nombre: "",
-    apellido: "",
-    fechaNacimiento: "",
-    documento: "",
-    genero: "",
-    telefono: "",
-    direccion: "",
+    name: "",
+    lastName: "",
+    birthDate: "",
+    dni: "",
+    gender: "",
     email: "",
     password: "",
   });
+
+  const [errors, setErrors] = useState({});
+  const [registroExitoso, setRegistroExitoso] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +25,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
 
     try {
       const response = await registerUser(formData);
@@ -38,10 +40,57 @@ const Register = () => {
       console.error("Error en el registro:", error.message);
       alert("Ocurrió un error al registrarse: " + error.message);
     }
+
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      setRegistroExitoso(false);
+    } else {
+      setErrors({});
+      setRegistroExitoso(true);
+      console.log("Datos del registro:", formData);
+
+      setFormData({
+        name: "",
+        lastName: "",
+        birthDate: "",
+        dni: "",
+        gender: "",
+        email: "",
+        password: "",
+      });
+
+      setTimeout(() => {
+        setRegistroExitoso(false);
+      }, 5000);
+    }
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = "El nombre es obligatorio";
+    if (!formData.lastName.trim()) newErrors.lastName = "El apellido es obligatorio";
+    if (!formData.birthDate) newErrors.birthDate = "La fecha es obligatoria";
+    if (!formData.dni.trim()) newErrors.dni = "El documento es obligatorio";
+    if (!formData.gender) newErrors.gender = "Seleccione un género";
+    if (!formData.email.trim()) {
+      newErrors.email = "El correo es obligatorio";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Formato de correo inválido";
+    }
+    if (!formData.password.trim()) {
+      newErrors.password = "La contraseña es obligatoria";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Mínimo 6 caracteres";
+    }
+
+    return newErrors;
+
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 mt-20">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Regístrate
@@ -50,70 +99,59 @@ const Register = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
-                Nombre:
-              </label>
+              <label className="block text-gray-700 font-medium mb-1">Nombre:</label>
               <input
                 type="text"
-                name="nombre"
-                value={formData.nombre}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
-                required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
-                Apellido:
-              </label>
+              <label className="block text-gray-700 font-medium mb-1">Apellido:</label>
               <input
                 type="text"
-                name="apellido"
-                value={formData.apellido}
+                name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
-                required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
+              {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
-                Fecha de nacimiento:
-              </label>
+              <label className="block text-gray-700 font-medium mb-1">Fecha de nacimiento:</label>
               <input
                 type="date"
-                name="fechaNacimiento"
-                value={formData.fechaNacimiento}
+                name="birthDate"
+                value={formData.birthDate}
                 onChange={handleChange}
-                required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
+              {errors.birthDate && <p className="text-red-500 text-sm">{errors.birthDate}</p>}
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
-                Documento de identidad:
-              </label>
+              <label className="block text-gray-700 font-medium mb-1">Documento:</label>
               <input
                 type="text"
-                name="documento"
-                value={formData.documento}
+                name="dni"
+                value={formData.dni}
                 onChange={handleChange}
-                required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
+              {errors.dni && <p className="text-red-500 text-sm">{errors.dni}</p>}
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-1">
-                Género:
-              </label>
+              <label className="block text-gray-700 font-medium mb-1">Género:</label>
               <select
-                name="genero"
-                value={formData.genero}
+                name="gender"
+                value={formData.gender}
                 onChange={handleChange}
-                required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
                 <option value="">Seleccione</option>
@@ -121,7 +159,9 @@ const Register = () => {
                 <option value="Masculino">Masculino</option>
                 <option value="Otro">Otro</option>
               </select>
+              {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
             </div>
+
 
             <div>
               <label className="block text-gray-700 font-medium mb-1">
@@ -151,41 +191,45 @@ const Register = () => {
               />
             </div>
 
+
+
             <div className="md:col-span-2">
-              <label className="block text-gray-700 font-medium mb-1">
-                Correo electrónico:
-              </label>
+              <label className="block text-gray-700 font-medium mb-1">Correo electrónico:</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-gray-700 font-medium mb-1">
-                Contraseña:
-              </label>
+              <label className="block text-gray-700 font-medium mb-1">Contraseña:</label>
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
+              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors cursor-pointer"
+            className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
           >
             Registrarse
           </button>
+
+          {registroExitoso && (
+            <div className="mt-4 text-green-600 font-medium text-center">
+              ¡Registro exitoso! 🎉
+            </div>
+          )}
         </form>
       </div>
     </div>
@@ -193,3 +237,7 @@ const Register = () => {
 };
 
 export default Register;
+
+
+
+
