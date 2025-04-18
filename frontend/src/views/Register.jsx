@@ -34,11 +34,11 @@ const Register = () => {
       console.log("Datos del registro:", formData);
 
       setFormData({
-        nombre: "",
-        apellido: "",
-        fechaNacimiento: "",
-        documento: "",
-        genero: "",
+        name: "",
+        lastName: "",
+        birthDate: "",
+        dni: "",
+        gender: "",
         email: "",
         password: "",
       });
@@ -52,11 +52,11 @@ const Register = () => {
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.nombre.trim()) newErrors.nombre = "El nombre es obligatorio";
-    if (!formData.apellido.trim()) newErrors.apellido = "El apellido es obligatorio";
-    if (!formData.fechaNacimiento) newErrors.fechaNacimiento = "La fecha es obligatoria";
-    if (!formData.documento.trim()) newErrors.documento = "El documento es obligatorio";
-    if (!formData.genero) newErrors.genero = "Seleccione un género";
+    if (!formData.name.trim()) newErrors.name = "El nombre es obligatorio";
+    if (!formData.lastName.trim()) newErrors.lastName = "El apellido es obligatorio";
+    if (!formData.birthDate) newErrors.birthDate = "La fecha es obligatoria";
+    if (!formData.dni.trim()) newErrors.dni = "El documento es obligatorio";
+    if (!formData.gender) newErrors.gender = "Seleccione un género";
     if (!formData.email.trim()) {
       newErrors.email = "El correo es obligatorio";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -79,62 +79,59 @@ const Register = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          
             <div>
               <label className="block text-gray-700 font-medium mb-1">Nombre:</label>
               <input
                 type="text"
-                name="nombre"
-                value={formData.nombre}
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              {errors.nombre && <p className="text-red-500 text-sm">{errors.nombre}</p>}
+              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
 
             <div>
               <label className="block text-gray-700 font-medium mb-1">Apellido:</label>
               <input
                 type="text"
-                name="apellido"
-                value={formData.apellido}
+                name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              {errors.apellido && <p className="text-red-500 text-sm">{errors.apellido}</p>}
+              {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
             </div>
 
             <div>
               <label className="block text-gray-700 font-medium mb-1">Fecha de nacimiento:</label>
               <input
                 type="date"
-                name="fechaNacimiento"
-                value={formData.fechaNacimiento}
+                name="birthDate"
+                value={formData.birthDate}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              {errors.fechaNacimiento && (
-                <p className="text-red-500 text-sm">{errors.fechaNacimiento}</p>
-              )}
+              {errors.birthDate && <p className="text-red-500 text-sm">{errors.birthDate}</p>}
             </div>
 
             <div>
               <label className="block text-gray-700 font-medium mb-1">Documento:</label>
               <input
                 type="text"
-                name="documento"
-                value={formData.documento}
+                name="dni"
+                value={formData.dni}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              {errors.documento && <p className="text-red-500 text-sm">{errors.documento}</p>}
+              {errors.dni && <p className="text-red-500 text-sm">{errors.dni}</p>}
             </div>
 
             <div>
               <label className="block text-gray-700 font-medium mb-1">Género:</label>
               <select
-                name="genero"
-                value={formData.genero}
+                name="gender"
+                value={formData.gender}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
@@ -143,7 +140,7 @@ const Register = () => {
                 <option value="Masculino">Masculino</option>
                 <option value="Otro">Otro</option>
               </select>
-              {errors.genero && <p className="text-red-500 text-sm">{errors.genero}</p>}
+              {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
             </div>
 
             <div className="md:col-span-2">
@@ -190,3 +187,5 @@ const Register = () => {
 };
 
 export default Register;
+
+
