@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PublicLayout from "./components/PublicLayout";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+
+import Home from "./views/Home";
+import Login from "./views/Login";
+import Register from "./views/Register";
 import Navbar from "./layout/NavBar";
+import PublicLayout from "./componentes/PublicLayout";
+import NotFound from "./views/NotFound";
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Router>

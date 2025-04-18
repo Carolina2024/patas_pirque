@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -6,9 +6,9 @@ const Navbar = () => {
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         {/* Logo a la izquierda */}
         <div className="flex items-center">
-            <Link to="/">
-            <img src="/src/assets/logo.png" alt="Logo" className="w-25 h-25" />
-            </Link>
+          <Link to="/">
+            <img src="/assets/logo.png" alt="Logo" className="w-25 h-25" />
+          </Link>
         </div>
 
         {/* Botones de Login y Register a la derecha */}
