@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PublicLayout from "./components/PublicLayout";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Navbar from "./layout/NavBar";
+import PublicLayout from "./componentes/PublicLayout";
 
 function App() {
   return (
