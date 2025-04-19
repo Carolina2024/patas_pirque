@@ -40,7 +40,7 @@ const Login = () => {
     }
 
     try {
-      // Mostrando el spinner de carga
+      // Spinner de carga
       Swal.fire({
         title: "Iniciando sesión...",
         text: "Por favor espera un momento",
@@ -49,42 +49,49 @@ const Login = () => {
           Swal.showLoading();
         },
       });
-
+    
       // Timeout simulado para mostrar el spinner
-      setTimeout(async () => {
-        const data = await loginUser({ email, password });
-
-        localStorage.setItem("token", data.token);
-        if (data.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    
+      const data = await loginUser({ email, password });
+    
+      localStorage.setItem("token", data.token);
+      if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
+    
+      console.log("Usuario logueado:", data);
+    
+      setErrors({});
+      setEmail("");
+      setPassword("");
+    
+      Swal.close();
+    
+      Swal.fire({
+        title: "¡Inicio de sesión exitoso!",
+        text: "Bienvenido/a a Patas Pirque",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "#FAAB75",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/dashboard");
         }
-
-        console.log("Usuario logueado:", data);
-
-        setErrors({});
-        setEmail("");
-        setPassword("");
-
-        Swal.close(); // Cerrar spinner
-
-        //Alerta de inicio de sesión exitoso
-        Swal.fire({
-          title: "¡Inicio de sesión exitoso!",
-          text: "Bienvenido/a a Patas Pirque",
-          icon: "success",
-          confirmButtonText: "Aceptar",
-          confirmButtonColor: "#FAAB75",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate("/dashboard");
-          }
-        });
-      }, 2000);
+      });
     } catch (err) {
-      Swal.close(); // cerrar spinner si hay error
-      setError(err.message);
+      // Manejo de errores
+      Swal.close();
       console.error("Error al iniciar sesión:", err);
+      // Mostrar alerta de error
+      Swal.fire({
+        icon: "error",
+        title: "Credenciales inválidas",
+        text: "El correo o la contraseña son incorrectos. Intenta nuevamente.",
+        confirmButtonColor: "#FAAB75",
+      });
     }
+    
   };
 
   return (
