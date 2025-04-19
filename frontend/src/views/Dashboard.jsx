@@ -1,3 +1,5 @@
+import PetList from "../componentes/PetList";
+
 const Dashboard = () => {
   return (
     <div>

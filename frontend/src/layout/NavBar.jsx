@@ -20,6 +20,10 @@ const Navbar = () => {
           <Link to="/">
             <img src="/assets/logo.png" alt="Logo" className="w-30 h-30" />
           </Link>
+
+          <Link to="/pets">
+             <h1 className="text-2xl text-primary cursor-pointer">Mascotas</h1>
+          </Link>
         </div>
 
         {/* Botones de Logueo*/}
