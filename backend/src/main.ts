@@ -18,10 +18,19 @@ async function bootstrap() {
     .setTitle('Patas Pirque')
     .setDescription('Documentación sobre la API para la plataforma web Patas Pirque')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',  
+      },
+      'access-token',  
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
   app.enableCors();
+
   await app.listen(process.env.PORT ?? 3000);
   console.log('Swagger UI →', (await app.getUrl()) + '/docs');
 }
