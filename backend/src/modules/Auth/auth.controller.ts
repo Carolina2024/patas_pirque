@@ -8,7 +8,7 @@ import {
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { RegisterUserDto } from './dto/registerUser.dto';
-import { Public } from './decorators/public.decorator'; 
+import { Public } from '../../common/decorators/public.decorator'; 
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
