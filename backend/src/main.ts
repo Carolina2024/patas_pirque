@@ -19,6 +19,14 @@ async function bootstrap() {
     .setDescription('Documentación sobre la API para la plataforma web Patas Pirque')
     .setVersion('1.0')
     .addBearerAuth()
+    .addGlobalResponse({
+      status: 500,
+      description: 'Error en el servidor.',
+      example: {
+        message: 'Internal server error',
+        statusCode: 500,
+      },
+    })
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
