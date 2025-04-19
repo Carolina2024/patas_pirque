@@ -1,21 +1,45 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { Pets } from './pets.entity';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../Auth/guards/jwt-auth.guard';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @ApiTags('Pets')
-@ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
 @Controller('pets')
 export class PetsController {
+  constructor(private readonly petsService: PetsService) {}
 
-    constructor(
-        private readonly petsService: PetsService
-    ){}
-
-    @Get()
-    async findAll():Promise<Pets[]>{
-        return await this.petsService.findAll();
-    }
+  @ApiOperation({
+    summary: 'Obtener todas las mascotas',
+    description: 'Devuelve todas las mascotas de la plataforma.',
+  })
+  @ApiOkResponse({
+    description: 'Retorno exitoso de todas las mascotas.',
+    type: Pets,
+    example: [
+      {
+        id: 1,
+        name: 'garfield',
+        race: 'criollo',
+        age: 'Adulto',
+        species: 'Gato',
+        size: 'Mediano',
+        isActive: true,
+      },
+      {
+        id: 2,
+        name: 'scooby doo',
+        race: 'doberman',
+        age: 'Adulto',
+        species: 'Perro',
+        size: 'Grande',
+        isActive: true,
+      },
+    ],
+  })
+  @Public()
+  @Get()
+  async findAll(): Promise<Pets[]> {
+    return await this.petsService.findAll();
+  }
 }
