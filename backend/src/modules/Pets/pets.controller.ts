@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Query, HttpCode } from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { Pets } from './pets.entity';
 import { CreatePetDto } from './dto/create-pet.dto';
@@ -15,6 +15,7 @@ import {
   getSchemaPath,
   ApiInternalServerErrorResponse,
   ApiBadRequestResponse,
+  ApiNoContentResponse,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../Auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../Auth/guards/roles.guard';
@@ -197,7 +198,7 @@ export class PetsController {
     summary: 'Eliminar una mascota',
     description: 'Elimina una mascota de la plataforma.',
   })
-  @ApiOkResponse({
+  @ApiNoContentResponse({
     description: 'La mascota ha sido eliminada exitosamente.',
   })
   @ApiBadRequestResponse({
@@ -231,6 +232,7 @@ export class PetsController {
       statusCode: 403,
     },
   })
+  @HttpCode(204)
   @Roles(Role.Admin)
   @Delete(':id')
   async deletePet(@Param('id') id: string): Promise<void> {
