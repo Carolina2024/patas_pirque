@@ -37,7 +37,8 @@ const Register = () => {
     setErrors({});
 
     try {
-      // Mostrando el spinner de carga
+      
+
       Swal.fire({
         title: "Registrando usuario...",
         text: "Por favor espera un momento",
@@ -47,19 +48,19 @@ const Register = () => {
         },
       });
 
-      // Timeout simulado para mostrar el spinner
+      
       setTimeout(async () => {
         const response = await registerUser(formData);
         console.log("Registro exitoso:", response);
 
-        // Almacenando el token en localStorage
+        
         if (response.token) {
           localStorage.setItem("token", response.token);
         }
 
-        Swal.close(); // Cerrar spinner
+        Swal.close(); 
 
-        //Alerta de registro exitoso
+        
         Swal.fire({
           title: "¡Registro exitoso!",
           text: "Ahora puedes iniciar sesión",
@@ -72,7 +73,7 @@ const Register = () => {
           }
         });
 
-        // Limpiamos formulario
+        
         setFormData({
           name: "",
           lastName: "",
