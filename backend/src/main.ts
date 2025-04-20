@@ -16,7 +16,9 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Patas Pirque')
-    .setDescription('Documentación sobre la API para la plataforma web Patas Pirque')
+    .setDescription(
+      'Documentación sobre la API para la plataforma web Patas Pirque',
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .addGlobalResponse({
@@ -33,6 +35,5 @@ async function bootstrap() {
   app.enableCors();
 
   await app.listen(process.env.PORT ?? 3000);
-  console.log('Swagger UI →', (await app.getUrl()) + '/docs');
 }
 bootstrap();

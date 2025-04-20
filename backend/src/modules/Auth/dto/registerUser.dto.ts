@@ -73,12 +73,4 @@ export class RegisterUserDto {
       'La contraseña debe tener mínimo 6 caracteres, al menos una letra, un número y un símbolo (@$!%*?&)',
   })
   password!: string;
-
-  @IsOptional()
-  @IsEnum(Role, { message: 'El rol debe ser un valor válido' })
-  role?: Role;
-
-  @IsOptional()
-  @IsBoolean({ message: 'isActive debe ser verdadero o falso' })
-  isActive?: boolean;
 }

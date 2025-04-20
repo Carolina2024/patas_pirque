@@ -2,6 +2,7 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import { OWNER_OR_ADMIN_KEY } from 'src/common/decorators/owner-or-admin.decorator';
+import { Role } from 'src/common/enums/roles.enum';
 import { Users } from 'src/modules/User/user.entity';
 
 @Injectable()
@@ -20,6 +21,6 @@ export class OwnerOrAdminGuard implements CanActivate {
 
     const idParam = request.params.id;
 
-    return user?.role === 'admin' || user.id == idParam;
+    return user?.role === Role.Admin || user.id == idParam;
   }
 }
