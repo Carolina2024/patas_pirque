@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Query } from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { Pets } from './pets.entity';
 import { CreatePetDto } from './dto/create-pet.dto';
@@ -12,12 +12,15 @@ import {
   ApiUnauthorizedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
+  getSchemaPath,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../Auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../Auth/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/roles.enum';
 import { Public } from 'src/common/decorators/public.decorator';
+import { FindPetsDto } from './dto/find-pets.dto';
+import { PaginatedResponse } from './interfaces/pagination.interface';
 
 @ApiTags('Pets')
 @ApiBearerAuth()
@@ -28,31 +31,22 @@ export class PetsController {
 
   @ApiOperation({
     summary: 'Obtener todas las mascotas',
-    description: 'Devuelve todas las mascotas de la plataforma.',
+    description: 'Devuelve todas las mascotas con paginación y filtros',
   })
   @ApiOkResponse({
-    description: 'Retorno exitoso de todas las mascotas.',
-    type: Pets,
-    example: [
-      {
-        id: 1,
-        name: 'garfield',
-        race: 'criollo',
-        age: 'Adulto',
-        species: 'Gato',
-        size: 'Mediano',
-        isActive: true,
-      },
-      {
-        id: 2,
-        name: 'scooby doo',
-        race: 'doberman',
-        age: 'Adulto',
-        species: 'Perro',
-        size: 'Grande',
-        isActive: true,
-      },
-    ],
+    description: 'Retorno exitoso de las mascotas',
+    schema: {
+        properties: {
+            items: {
+                type: 'array',
+                items: { $ref: getSchemaPath(Pets) }
+            },
+            total: { type: 'number' },
+            page: { type: 'number' },
+            limit: { type: 'number' },
+            totalPages: { type: 'number' }
+        }
+    }
   })
   @ApiUnauthorizedResponse({
     description: 'El usuario no está autorizado',
@@ -63,8 +57,8 @@ export class PetsController {
   })
   @Public()
   @Get()
-  async findAll(): Promise<Pets[]> {
-    return await this.petsService.findAll();
+  async getAllPets(@Query() findPetsDto: FindPetsDto): Promise<PaginatedResponse>{
+    return this.petsService.findAll(findPetsDto);
   }
 
   @ApiOperation({
