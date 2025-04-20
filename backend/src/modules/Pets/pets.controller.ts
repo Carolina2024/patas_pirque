@@ -13,6 +13,8 @@ import {
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   getSchemaPath,
+  ApiInternalServerErrorResponse,
+  ApiBadRequestResponse,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../Auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../Auth/guards/roles.guard';
@@ -48,6 +50,22 @@ export class PetsController {
         }
     }
   })
+  @ApiBadRequestResponse({
+    description: 'Parámetros de consulta inválidos',
+    example: {
+      message: 'Parámetros de consulta inválidos',
+      error: 'Bad Request',
+      statusCode: 400,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Error interno del servidor',
+    example: {
+      message: 'Error interno del servidor',
+      error: 'Internal Server Error',
+      statusCode: 500,
+    },
+  })
   @ApiUnauthorizedResponse({
     description: 'El usuario no está autorizado',
     example: {
@@ -68,6 +86,14 @@ export class PetsController {
   @ApiOkResponse({
     description: 'Retorno exitoso de la mascota.',
     type: Pets,
+  })
+  @ApiBadRequestResponse({
+    description: 'ID de mascota inválido',
+    example: {
+      message: 'ID de mascota inválido',
+      error: 'Bad Request',
+      statusCode: 400,
+    },
   })
   @ApiNotFoundResponse({
     description: 'La mascota no fue encontrada',
@@ -90,6 +116,21 @@ export class PetsController {
     description: 'La mascota ha sido creada exitosamente.',
     type: Pets,
   })
+  @ApiBadRequestResponse({
+    description: 'Datos de mascota inválidos',
+    example: {
+      message: 'Datos de mascota inválidos',
+      error: 'Bad Request',
+      statusCode: 400,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Usuario no autorizado',
+    example: {
+      message: 'No autorizado',
+      statusCode: 401,
+    },
+  })
   @ApiForbiddenResponse({
     description: 'No tiene permisos para crear mascotas',
     example: {
@@ -111,6 +152,29 @@ export class PetsController {
   @ApiOkResponse({
     description: 'La mascota ha sido actualizada exitosamente.',
     type: Pets,
+  })
+  @ApiBadRequestResponse({
+    description: 'Datos de actualización inválidos',
+    example: {
+      message: 'Datos de actualización inválidos',
+      error: 'Bad Request',
+      statusCode: 400,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Usuario no autorizado',
+    example: {
+      message: 'No autorizado',
+      statusCode: 401,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: 'Usuario sin permisos suficientes',
+    example: {
+      message: 'Acceso denegado',
+      error: 'Forbidden',
+      statusCode: 403,
+    },
   })
   @ApiNotFoundResponse({
     description: 'La mascota no fue encontrada',
@@ -136,12 +200,35 @@ export class PetsController {
   @ApiOkResponse({
     description: 'La mascota ha sido eliminada exitosamente.',
   })
+  @ApiBadRequestResponse({
+    description: 'ID de mascota inválido',
+    example: {
+      message: 'ID de mascota inválido',
+      error: 'Bad Request',
+      statusCode: 400,
+    },
+  })
   @ApiNotFoundResponse({
     description: 'La mascota no fue encontrada',
     example: {
       message: 'Mascota no encontrada',
       error: 'Not Found',
       statusCode: 404,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Usuario no autorizado',
+    example: {
+      message: 'No autorizado',
+      statusCode: 401,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: 'Usuario sin permisos suficientes',
+    example: {
+      message: 'Acceso denegado',
+      error: 'Forbidden',
+      statusCode: 403,
     },
   })
   @Roles(Role.Admin)
