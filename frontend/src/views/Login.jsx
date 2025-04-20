@@ -32,15 +32,14 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
+  
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-
+  
     try {
-      // Spinner de carga
       Swal.fire({
         title: "Iniciando sesión...",
         text: "Por favor espera un momento",
@@ -49,25 +48,24 @@ const Login = () => {
           Swal.showLoading();
         },
       });
-    
-      // Timeout simulado para mostrar el spinner
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-    
-      const data = await loginUser({ email, password });
-    
-      localStorage.setItem("token", data.token);
+  
+      const data = await loginUser({ email, password }); 
+  
+      localStorage.setItem("token", data.token); 
       if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
       }
-    
-      console.log("Usuario logueado:", data);
-    
+  
+     
+      const payload = JSON.parse(atob(data.token.split(".")[1]));
+      console.log("Payload decodificado:", payload);
+  
+      
       setErrors({});
       setEmail("");
       setPassword("");
-    
       Swal.close();
-    
+  
       Swal.fire({
         title: "¡Inicio de sesión exitoso!",
         text: "Bienvenido/a a Patas Pirque",
@@ -80,10 +78,8 @@ const Login = () => {
         }
       });
     } catch (err) {
-      // Manejo de errores
       Swal.close();
       console.error("Error al iniciar sesión:", err);
-      // Mostrar alerta de error
       Swal.fire({
         icon: "error",
         title: "Credenciales inválidas",
@@ -91,8 +87,8 @@ const Login = () => {
         confirmButtonColor: "#FAAB75",
       });
     }
-    
   };
+  
 
   return (
     <div className="m-10 flex items-center justify-center bg-gray-100">
