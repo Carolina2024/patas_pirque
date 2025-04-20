@@ -87,7 +87,7 @@ export class AuthController {
         'El nombre es requerido',
         'El correo es requerido',
         'Ingrese un correo con un formato válido',
-        'La contraseña debe ser de al menos 6 caracteres',
+        'La contraseña debe tener mínimo 6 caracteres, al menos una letra, un número y un símbolo (@$!%*?&)',
       ],
       error: 'Bad Request',
       statusCode: 400,
