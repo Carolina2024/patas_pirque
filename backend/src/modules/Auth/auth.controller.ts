@@ -8,7 +8,7 @@ import {
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { RegisterUserDto } from './dto/registerUser.dto';
-import { Public } from '../../common/decorators/public.decorator'; 
+import { Public } from '../../common/decorators/public.decorator';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -56,7 +56,7 @@ export class AuthController {
       statusCode: 401,
     },
   })
-  @Public()  
+  @Public()
   @Post('login')
   @HttpCode(200)
   userLogin(@Body() data: LoginUserDto) {
@@ -76,8 +76,12 @@ export class AuthController {
     example: {
       id: 0,
       name: 'John',
-      email: 'john@example.com',
-      password: 'JonnSecretPassword',
+      lastName: 'Doe',
+      birthDate: '2000-09-12',
+      dni: '12345678',
+      gender: 'Masculino',
+      email: 'user@example.com',
+      password: 'ABC123$%^2AFfgaca',
     },
   })
   @ApiBadRequestResponse({
@@ -87,7 +91,7 @@ export class AuthController {
         'El nombre es requerido',
         'El correo es requerido',
         'Ingrese un correo con un formato válido',
-        'La contraseña debe ser de al menos 6 caracteres',
+        'La contraseña debe tener mínimo 6 caracteres, al menos una letra, un número y un símbolo (@$!%*?&)',
       ],
       error: 'Bad Request',
       statusCode: 400,
@@ -101,7 +105,7 @@ export class AuthController {
       statusCode: 409,
     },
   })
-  @Public()    
+  @Public()
   @Post('register')
   @HttpCode(201)
   create(@Body() registerUserDto: RegisterUserDto) {

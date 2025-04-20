@@ -1,6 +1,6 @@
 export enum Ages {
-   PUPPY = 'Cachorro',
-   YOUNG = 'Joven',
-   ADULT = 'Adulto',
-   SENIOR = 'Anciano'
+  PUPPY = 'Cachorro',
+  YOUNG = 'Joven',
+  ADULT = 'Adulto',
+  SENIOR = 'Anciano',
 }
