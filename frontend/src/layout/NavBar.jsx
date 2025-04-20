@@ -1,7 +1,7 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const location = useLocation();
+  /* const location = useLocation(); */
   const navigate = useNavigate();
 
   const isLoggedIn = !!localStorage.getItem("token");
@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
+    navigate("/login");
   };
 
   return (
