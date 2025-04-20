@@ -1,8 +1,8 @@
 // Endpoints del backend
-const BASE_URL = "https://patas-pirque.onrender.com"; // Enlace al backend
-const AUTH_URL = `${BASE_URL}/auth`; // Módulo de autenticación
+const BASE_URL = "https://patas-pirque.onrender.com"; 
+const AUTH_URL = `${BASE_URL}/auth`; 
 
-// Realiza la petición al backend para registrar un nuevo usuario
+
 export const registerUser = async (data) => {
   const res = await fetch(`${AUTH_URL}/register`, {
     method: "POST",
@@ -17,10 +17,10 @@ export const registerUser = async (data) => {
     throw new Error(errorData.message || "Error al registrar usuario");
   }
 
-  return res.json(); // Retorna el usuario creado o el mensaje presente en backend
+  return res.json(); 
 };
 
-// Realiza la petición al backend para iniciar sesión
+
 export const loginUser = async (data) => {
   const res = await fetch(`${AUTH_URL}/login`, {
     method: "POST",
@@ -35,12 +35,12 @@ export const loginUser = async (data) => {
     throw new Error(errorData.message || "Error al iniciar sesión");
   }
 
-  return res.json(); // Retorna token y datos del usuario
+  return res.json(); 
 };
 
-// Obtiene la lista de usuarios
+
 export const fetchUsers = async () => {
-  const token = localStorage.getItem("token"); // Recupera el token del login
+  const token = localStorage.getItem("token"); 
 
   const res = await fetch(`${BASE_URL}/users`, {
     method: "GET",
@@ -54,5 +54,5 @@ export const fetchUsers = async () => {
     throw new Error(errorData.message || "Error al obtener usuarios");
   }
 
-  return res.json(); // Retorna lista de usuarios
+  return res.json(); 
 };
