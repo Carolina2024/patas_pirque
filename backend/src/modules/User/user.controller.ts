@@ -74,7 +74,7 @@ export class UserController {
       statusCode: 403,
     },
   })
-  @Roles(Role.Admin)
+  @Roles(Role.ADMIN)
   @Get()
   async getAllUsers(): Promise<Users[]> {
     return this.userService.findAll();

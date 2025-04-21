@@ -2,11 +2,12 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UserService } from '../../User/user.service';
+import { Role } from 'src/common/enums/roles.enum';
 
 export interface JwtPayload {
     sub: string;
     email: string;
-    role: 'user' | 'admin';   
+    role: Role;   
   }
 
 @Injectable()
@@ -21,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayload) {
     const user = await this.userService.findById(payload.sub);
-    if (!user) throw new UnauthorizedException();
+    if (!user) throw new UnauthorizedException({}, "No autorizado");
     return user;                
   }
 }

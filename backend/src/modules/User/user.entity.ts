@@ -19,7 +19,7 @@ export class Users {
   email!: string;
   @Column()
   password!: string;
-  @Column({ default: Role.User, type: 'enum', enum: Role })
+  @Column({ default: Role.USER, type: 'enum', enum: Role })
   role!: Role;
   @Column({ default: true })
   isActive!: boolean;
