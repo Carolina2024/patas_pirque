@@ -140,7 +140,7 @@ export class PetsController {
       statusCode: 403,
     },
   })
-  @Roles(Role.Admin)
+  @Roles(Role.ADMIN)
   @Post()
   async createPet(@Body() createPetDto: CreatePetDto): Promise<Pets> {
     return this.petsService.create(createPetDto);
@@ -185,7 +185,7 @@ export class PetsController {
       statusCode: 404,
     },
   })
-  @Roles(Role.Admin)
+  @Roles(Role.ADMIN)
   @Put(':id')
   async updatePet(
     @Param('id') id: string,
@@ -233,7 +233,7 @@ export class PetsController {
     },
   })
   @HttpCode(204)
-  @Roles(Role.Admin)
+  @Roles(Role.ADMIN)
   @Delete(':id')
   async deletePet(@Param('id') id: string): Promise<void> {
     return this.petsService.delete(id);

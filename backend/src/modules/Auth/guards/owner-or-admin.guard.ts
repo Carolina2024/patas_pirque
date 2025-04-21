@@ -21,6 +21,6 @@ export class OwnerOrAdminGuard implements CanActivate {
 
     const idParam = request.params.id;
 
-    return user?.role === Role.Admin || user.id == idParam;
+    return user?.role === Role.ADMIN || user.id == idParam;
   }
 }
