@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { usePets } from "../hook/usePets";
+import EditPet from "./EditPet";
 
 const PetList = ({ pets = [] }) => {
+  const [editingPetId, setEditingPetId] = useState(null);
   const [page, setPage] = useState(1);
 
   const [filters, setFilters] = useState({
@@ -10,6 +12,15 @@ const PetList = ({ pets = [] }) => {
     race: "",
     age: "",
   });
+
+  const handleSaveEdit = (updatedPet) => {
+    setEditingPetId(null);
+    const newPets = uniquePets.map((pet) =>
+      pet.id === updatedPet.id ? updatedPet : pet
+    );
+  };
+
+  const handleCancelEdit = () => setEditingPetId(null);
 
   const [inputFilters, setInputFilters] = useState(filters);
 
@@ -132,19 +143,36 @@ const PetList = ({ pets = [] }) => {
             <div>Tamaño</div>
           </div>
 
-          {uniquePets.map((pet) => (
-            <div
-              key={pet.id}
-              className="grid grid-cols-6 border-b border-tertiary p-2 text-lg text-black"
-            >
-              <div>{pet.id}</div>
-              <div>{pet.name}</div>
-              <div>{pet.race}</div>
-              <div>{pet.age}</div>
-              <div>{pet.species}</div>
-              <div>{pet.size}</div>
-            </div>
-          ))}
+          {uniquePets.map((pet) =>
+            editingPetId === pet.id ? (
+              <EditPet
+                key={pet.id}
+                pet={pet}
+                onCancel={handleCancelEdit}
+                onSave={handleSaveEdit}
+              />
+            ) : (
+              <div
+                key={pet.id}
+                className="grid grid-cols-6 border-b border-tertiary p-2 text-lg text-black"
+              >
+                <div>{pet.id}</div>
+                <div>{pet.name}</div>
+                <div>{pet.race}</div>
+                <div>{pet.age}</div>
+                <div>{pet.species}</div>
+                <div>{pet.size}</div>
+                <div className="col-span-6 flex justify-end mt-1">
+                  <button
+                    onClick={() => setEditingPetId(pet.id)}
+                    className="px-2 py-1 text-sm bg-yellow-400 rounded hover:bg-yellow-300"
+                  >
+                    Editar
+                  </button>
+                </div>
+              </div>
+            )
+          )}
         </>
       )}
 

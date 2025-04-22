@@ -100,7 +100,7 @@ const Dashboard = () => {
             onCancel={() => setShowCreatePet(false)}
           />
         ) : (
-          <PetList pets={pets} />
+          <PetList pets={pets} setPets={setPets} />
         )}
       </div>
     </div>
