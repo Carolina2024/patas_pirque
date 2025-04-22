@@ -4,7 +4,6 @@ import { usePets } from "../hook/usePets";
 const PetList = () => {
   const [page, setPage] = useState(1);
 
-  // Estado para filtros aplicados
   const [filters, setFilters] = useState({
     name: '',
     species: '',
@@ -12,30 +11,33 @@ const PetList = () => {
     age: ''
   });
 
-  // Estado para inputs controlados
   const [inputFilters, setInputFilters] = useState(filters);
 
-  // Debounce (espera 500ms después de que el usuario deja de escribir)
+  // Debounce de filtros
   useEffect(() => {
     const handler = setTimeout(() => {
-      setFilters(inputFilters); // Aplica filtros después del delay
-    }, 500); // Puedes ajustar a 300ms si quieres algo más rápido
+      setFilters(inputFilters);
+    }, 500);
 
-    return () => clearTimeout(handler); // Limpia el timeout anterior
+    return () => clearTimeout(handler);
   }, [inputFilters]);
 
   useEffect(() => {
-    setPage(1); // Reinicia página cuando cambian los filtros
+    setPage(1);
   }, [filters]);
 
-  const { data, isLoading, error } = usePets({ page, filters });
+  const { data, isLoading, isFetching, error } = usePets({ page, filters });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setInputFilters(prev => ({
+    setInputFilters((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
+  };
+
+  const preventEnterSubmit = (e) => {
+    if (e.key === 'Enter') e.preventDefault();
   };
 
   const clearFilters = () => {
@@ -47,11 +49,7 @@ const PetList = () => {
     });
   };
 
-  const preventEnterSubmit = (e) => {
-    if (e.key === 'Enter') e.preventDefault();
-  };
-
-  if (isLoading) return <p>Cargando mascotas...</p>;
+  if (!data && isLoading) return <p>Cargando mascotas...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
@@ -105,7 +103,7 @@ const PetList = () => {
         </div>
       </div>
 
-      {/* Tabla de resultados */}
+      {/* Tabla */}
       {data.items.length === 0 ? (
         <p className="text-center text-xl font-semibold text-tertiary">
           No hay mascotas con estos filtros
@@ -133,6 +131,14 @@ const PetList = () => {
             </div>
           ))}
         </>
+      )}
+
+      {/* Actualizacion */}
+      {isFetching && !isLoading && (
+        <div className="flex items-center gap-2 text-sm text-gray-500 italic mt-2">
+          <div className="w-4 h-4 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+          <span>Actualizando resultados...</span>
+        </div>
       )}
 
       {/* Paginación */}
