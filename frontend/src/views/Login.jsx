@@ -11,34 +11,59 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  const validateField = (name, value) => {
+    switch (name) {
+      case "email":
+        if (!value.trim()) return "El correo es obligatorio";
+        if (!/\S+@\S+\.\S+/.test(value))
+          return "Correo inválido. Ej: ejemplo@dominio.com";
+        return "";
+      case "password":
+        if (!value.trim()) return "La contraseña es obligatoria";
+        if (
+          !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/.test(
+            value
+          )
+        ) {
+          return "Debe tener mínimo 6 caracteres, letras, números y símbolos. Ej: hola123!";
+        }
+        return "";
+      default:
+        return "";
+    }
+  };
+
   const validate = () => {
     const newErrors = {};
+    newErrors.email = validateField("email", email);
+    newErrors.password = validateField("password", password);
+    return Object.fromEntries(
+      Object.entries(newErrors).filter(([, msg]) => msg)
+    );
+  };
 
-    if (!email.trim()) {
-      newErrors.email = "El correo es obligatorio";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Formato de correo inválido";
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
 
-    if (!password.trim()) {
-      newErrors.password = "La contraseña es obligatoria";
-    } else if (password.length < 8) {
-      newErrors.password = "Mínimo 8 caracteres";
-    }
-
-    return newErrors;
+    const errorMsg = validateField(name, value);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: errorMsg,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-  
+
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-  
+
     try {
       Swal.fire({
         title: "Iniciando sesión...",
@@ -48,24 +73,22 @@ const Login = () => {
           Swal.showLoading();
         },
       });
-  
-      const data = await loginUser({ email, password }); 
-  
-      localStorage.setItem("token", data.token); 
+
+      const data = await loginUser({ email, password });
+
+      localStorage.setItem("token", data.token);
       if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
       }
-  
-     
+
       const payload = JSON.parse(atob(data.token.split(".")[1]));
       console.log("Payload decodificado:", payload);
-  
-      
+
       setErrors({});
       setEmail("");
       setPassword("");
       Swal.close();
-  
+
       Swal.fire({
         title: "¡Inicio de sesión exitoso!",
         text: "Bienvenido/a a Patas Pirque",
@@ -88,7 +111,6 @@ const Login = () => {
       });
     }
   };
-  
 
   return (
     <div className="m-10 flex items-center justify-center bg-gray-100">
@@ -108,8 +130,9 @@ const Login = () => {
             </label>
             <input
               type="email"
+              name="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
             {errors.email && (
@@ -124,14 +147,16 @@ const Login = () => {
             </label>
             <input
               type="password"
+              name="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password}</p>
             )}
           </div>
+
           <button
             type="submit"
             className="w-full bg-tertiary text-white font-semibold py-3 px-4 rounded-lg hover:bg-primary transition-colors cursor-pointer"

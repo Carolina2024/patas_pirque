@@ -23,12 +23,18 @@ const Register = () => {
       ...prev,
       [name]: value,
     }));
+
+    const fieldError = validateField(name, value);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: fieldError,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validationErrors = validate();
+    const validationErrors = validateAll();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -37,8 +43,6 @@ const Register = () => {
     setErrors({});
 
     try {
-      
-
       Swal.fire({
         title: "Registrando usuario...",
         text: "Por favor espera un momento",
@@ -48,19 +52,16 @@ const Register = () => {
         },
       });
 
-      
       setTimeout(async () => {
         const response = await registerUser(formData);
         console.log("Registro exitoso:", response);
 
-        
         if (response.token) {
           localStorage.setItem("token", response.token);
         }
 
-        Swal.close(); 
+        Swal.close();
 
-        
         Swal.fire({
           title: "¡Registro exitoso!",
           text: "Ahora puedes iniciar sesión",
@@ -73,7 +74,6 @@ const Register = () => {
           }
         });
 
-        
         setFormData({
           name: "",
           lastName: "",
@@ -83,7 +83,6 @@ const Register = () => {
           email: "",
           password: "",
         });
-
       }, 2000);
     } catch (error) {
       Swal.close();
@@ -96,25 +95,52 @@ const Register = () => {
     }
   };
 
-  const validate = () => {
+  const validateField = (name, value) => {
+    switch (name) {
+      case "name":
+        if (!value.trim()) return "El nombre es obligatorio";
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value))
+          return "Solo se permiten letras";
+        return "";
+      case "lastName":
+        if (!value.trim()) return "El apellido es obligatorio";
+        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value))
+          return "Solo se permiten letras";
+        return "";
+      case "birthDate":
+        return value ? "" : "La fecha es obligatoria";
+      case "dni":
+        if (!value.trim()) return "El documento es obligatorio";
+        if (!/^\d{6}$/.test(value)) return "Debe tener 6 números exactos";
+        return "";
+      case "gender":
+        return value ? "" : "Seleccione un género";
+      case "email":
+        if (!value.trim()) return "El correo es obligatorio";
+        if (!/\S+@\S+\.\S+/.test(value))
+          return "Correo inválido. Ej: ejemplo@dominio.com";
+        return "";
+      case "password":
+        if (!value.trim()) return "La contraseña es obligatoria";
+        if (
+          !/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&._-])[A-Za-z\d@$!%*?&._-]{6,}$/.test(
+            value
+          )
+        ) {
+          return "Debe tener mínimo 6 caracteres, letras, números y símbolos. Ej: hola123!";
+        }
+        return "";
+      default:
+        return "";
+    }
+  };
+
+  const validateAll = () => {
     const newErrors = {};
-
-    if (!formData.name.trim()) newErrors.name = "El nombre es obligatorio";
-    if (!formData.lastName.trim()) newErrors.lastName = "El apellido es obligatorio";
-    if (!formData.birthDate) newErrors.birthDate = "La fecha es obligatoria";
-    if (!formData.dni.trim()) newErrors.dni = "El documento es obligatorio";
-    if (!formData.gender) newErrors.gender = "Seleccione un género";
-    if (!formData.email.trim()) {
-      newErrors.email = "El correo es obligatorio";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Formato de correo inválido";
+    for (const [key, value] of Object.entries(formData)) {
+      const error = validateField(key, value);
+      if (error) newErrors[key] = error;
     }
-    if (!formData.password.trim()) {
-      newErrors.password = "La contraseña es obligatoria";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Mínimo 6 caracteres";
-    }
-
     return newErrors;
   };
 
@@ -128,7 +154,9 @@ const Register = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Nombre */}
             <div>
-              <label className="block text-tertiary font-semibold mb-1">Nombre:</label>
+              <label className="block text-tertiary font-semibold mb-1">
+                Nombre:
+              </label>
               <input
                 type="text"
                 name="name"
@@ -136,12 +164,16 @@ const Register = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
-              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name}</p>
+              )}
             </div>
 
             {/* Apellido */}
             <div>
-              <label className="block text-tertiary font-semibold mb-1">Apellido:</label>
+              <label className="block text-tertiary font-semibold mb-1">
+                Apellido:
+              </label>
               <input
                 type="text"
                 name="lastName"
@@ -149,12 +181,16 @@ const Register = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
-              {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+              {errors.lastName && (
+                <p className="text-red-500 text-sm">{errors.lastName}</p>
+              )}
             </div>
 
             {/* Nacimiento */}
             <div>
-              <label className="block text-tertiary font-semibold mb-1">Fecha de nacimiento:</label>
+              <label className="block text-tertiary font-semibold mb-1">
+                Fecha de nacimiento:
+              </label>
               <input
                 type="date"
                 name="birthDate"
@@ -162,25 +198,34 @@ const Register = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
-              {errors.birthDate && <p className="text-red-500 text-sm">{errors.birthDate}</p>}
+              {errors.birthDate && (
+                <p className="text-red-500 text-sm">{errors.birthDate}</p>
+              )}
             </div>
 
             {/* DNI */}
             <div>
-              <label className="block text-tertiary font-semibold mb-1">DNI:</label>
+              <label className="block text-tertiary font-semibold mb-1">
+                DNI:
+              </label>
               <input
                 type="text"
                 name="dni"
                 value={formData.dni}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                maxLength="8"
               />
-              {errors.dni && <p className="text-red-500 text-sm">{errors.dni}</p>}
+              {errors.dni && (
+                <p className="text-red-500 text-sm">{errors.dni}</p>
+              )}
             </div>
 
             {/* Género */}
             <div>
-              <label className="block text-tertiary font-semibold mb-1">Género:</label>
+              <label className="block text-tertiary font-semibold mb-1">
+                Género:
+              </label>
               <select
                 name="gender"
                 value={formData.gender}
@@ -192,12 +237,16 @@ const Register = () => {
                 <option value="Masculino">Masculino</option>
                 <option value="Otro">Otro</option>
               </select>
-              {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
+              {errors.gender && (
+                <p className="text-red-500 text-sm">{errors.gender}</p>
+              )}
             </div>
 
-            {/* Email */}
+            {/* Correo */}
             <div className="md:col-span-2">
-              <label className="block text-tertiary font-semibold mb-1">Correo electrónico:</label>
+              <label className="block text-tertiary font-semibold mb-1">
+                Correo electrónico:
+              </label>
               <input
                 type="email"
                 name="email"
@@ -205,12 +254,16 @@ const Register = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
-              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
             </div>
 
-            {/* Password */}
+            {/* Contraseña */}
             <div className="md:col-span-2">
-              <label className="block text-tertiary font-semibold mb-1">Contraseña:</label>
+              <label className="block text-tertiary font-semibold mb-1">
+                Contraseña:
+              </label>
               <input
                 type="password"
                 name="password"
@@ -218,7 +271,9 @@ const Register = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               />
-              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+              {errors.password && (
+                <p className="text-red-500 text-sm">{errors.password}</p>
+              )}
             </div>
           </div>
 
