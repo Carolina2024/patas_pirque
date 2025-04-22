@@ -1,13 +1,24 @@
-const BASE_URL = "https://patas-pirque.onrender.com"; // Enlace al backend
+const BASE_URL = "https://patas-pirque.onrender.com";
 
-// Obtiene la lista de mascotas
-export const fetchPets = async (page = 1) => {
-  const token = localStorage.getItem("token"); // Recupera el token del login
+export const fetchPets = async ({ page = 1, limit = 4, filters = {} }) => {
+  const token = localStorage.getItem("token");
 
-  const res = await fetch(`${BASE_URL}/pets?page=${page}`, {
+  const queryParams = new URLSearchParams({
+    page,
+    limit,
+    ...Object.fromEntries(
+      Object.entries(filters).filter(([, value]) => value !== undefined && value !== '')
+    )
+  }).toString();
+
+  // Opcional para debug
+  console.log("Query params:", queryParams);
+
+  const res = await fetch(`${BASE_URL}/pets?${queryParams}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
     },
   });
 
