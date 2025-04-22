@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { usePets } from "../hook/usePets";
 
-const PetList = () => {
+const PetList = ({ pets = [] }) => {
   const [page, setPage] = useState(1);
 
   const [filters, setFilters] = useState({
-    name: '',
-    species: '',
-    race: '',
-    age: ''
+    name: "",
+    species: "",
+    race: "",
+    age: "",
   });
 
   const [inputFilters, setInputFilters] = useState(filters);
@@ -37,20 +37,33 @@ const PetList = () => {
   };
 
   const preventEnterSubmit = (e) => {
-    if (e.key === 'Enter') e.preventDefault();
+    if (e.key === "Enter") e.preventDefault();
   };
 
   const clearFilters = () => {
     setInputFilters({
-      name: '',
-      species: '',
-      race: '',
-      age: ''
+      name: "",
+      species: "",
+      race: "",
+      age: "",
     });
   };
 
   if (!data && isLoading) return <p>Cargando mascotas...</p>;
   if (error) return <p>Error: {error.message}</p>;
+
+  // Combinamos mascotas del backend y frontend
+  const combinedPets = [
+    ...(data?.items || []),
+    ...(Array.isArray(pets) ? pets : []),
+  ];
+
+  // (Opcional) eliminar duplicados si hay coincidencia por `id`
+  const uniquePetsMap = new Map();
+  for (const pet of combinedPets) {
+    uniquePetsMap.set(pet.id ?? pet.name + pet.race, pet);
+  }
+  const uniquePets = Array.from(uniquePetsMap.values());
 
   return (
     <div className="mx-10 mt-10">
@@ -104,30 +117,32 @@ const PetList = () => {
       </div>
 
       {/* Tabla */}
-      {data.items.length === 0 ? (
+      {uniquePets.length === 0 ? (
         <p className="text-center text-xl font-semibold text-tertiary">
           No hay mascotas con estos filtros
         </p>
       ) : (
         <>
-          <div className="grid grid-cols-5 gap-4 bg-primary text-secundary font-bold p-2 rounded-t">
+          <div className="grid grid-cols-6 bg-primary text-secundary font-bold p-1 rounded-t">
             <div>ID</div>
             <div>Nombre</div>
             <div>Raza</div>
             <div>Edad</div>
             <div>Especie</div>
+            <div>Tamaño</div>
           </div>
 
-          {data.items.map((pet) => (
+          {uniquePets.map((pet) => (
             <div
               key={pet.id}
-              className="grid grid-cols-5 gap-4 border-b border-tertiary p-2 text-lg text-black"
+              className="grid grid-cols-6 border-b border-tertiary p-2 text-lg text-black"
             >
               <div>{pet.id}</div>
               <div>{pet.name}</div>
               <div>{pet.race}</div>
               <div>{pet.age}</div>
               <div>{pet.species}</div>
+              <div>{pet.size}</div>
             </div>
           ))}
         </>
