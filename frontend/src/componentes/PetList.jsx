@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { usePets } from "../hook/usePets";
 import EditPet from "./EditPet";
 
-const PetList = ({ pets = [] }) => {
+const PetList = ({ pets = [], deletePet }) => {
   const [editingPetId, setEditingPetId] = useState(null);
   const [page, setPage] = useState(1);
 
@@ -37,7 +37,10 @@ const PetList = ({ pets = [] }) => {
     setPage(1);
   }, [filters]);
 
-  const { data, isLoading, isFetching, error } = usePets({ page, filters });
+  const { data, isLoading, isFetching, error } = usePets({
+    page,
+    filters,
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,6 +61,12 @@ const PetList = ({ pets = [] }) => {
       race: "",
       age: "",
     });
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("¿Estás seguro de que quieres eliminar esta mascota?")) {
+      deletePet(id);
+    }
   };
 
   if (!data && isLoading) return <p>Cargando mascotas...</p>;
@@ -134,7 +143,7 @@ const PetList = ({ pets = [] }) => {
         </p>
       ) : (
         <>
-          <div className="grid grid-cols-6 bg-primary text-secundary font-bold p-1 rounded-t">
+          <div className="grid grid-cols-7 bg-primary text-secundary font-bold p-1 rounded-t">
             <div>ID</div>
             <div>Nombre</div>
             <div>Raza</div>
@@ -154,7 +163,7 @@ const PetList = ({ pets = [] }) => {
             ) : (
               <div
                 key={pet.id}
-                className="grid grid-cols-6 border-b border-tertiary p-2 text-lg text-black"
+                className="grid grid-cols-7 border-b border-tertiary p-2 text-lg text-black"
               >
                 <div>{pet.id}</div>
                 <div>{pet.name}</div>
@@ -162,12 +171,19 @@ const PetList = ({ pets = [] }) => {
                 <div>{pet.age}</div>
                 <div>{pet.species}</div>
                 <div>{pet.size}</div>
-                <div className="col-span-6 flex justify-end mt-1">
+
+                <div className="col-span-7 flex justify-end mt-1 space-x-2">
                   <button
                     onClick={() => setEditingPetId(pet.id)}
-                    className="px-2 py-1 text-sm bg-yellow-400 rounded hover:bg-yellow-300"
+                    className="px-2 py-1 text-sm bg-yellow-400 rounded hover:bg-yellow-300 cursor-pointer"
                   >
                     Editar
+                  </button>
+                  <button
+                    onClick={() => handleDelete(pet.id)}
+                    className="px-2 py-1 text-sm bg-red-500 rounded hover:bg-red-400 cursor-pointer"
+                  >
+                    🗑️
                   </button>
                 </div>
               </div>

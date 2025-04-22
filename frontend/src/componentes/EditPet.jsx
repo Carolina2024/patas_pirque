@@ -1,4 +1,3 @@
-// componentes/EditPet.jsx
 import { useState } from "react";
 
 const EditPet = ({ pet, onCancel, onSave }) => {
