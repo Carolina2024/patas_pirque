@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards, Query, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Body,
+  UseGuards,
+  Query,
+  HttpCode,
+} from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { Pets } from './pets.entity';
 import { CreatePetDto } from './dto/create-pet.dto';
@@ -26,7 +37,6 @@ import { FindPetsDto } from './dto/find-pets.dto';
 import { PaginatedResponse } from './interfaces/pagination.interface';
 
 @ApiTags('Pets')
-@ApiBearerAuth()
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('pets')
 export class PetsController {
@@ -39,17 +49,17 @@ export class PetsController {
   @ApiOkResponse({
     description: 'Retorno exitoso de las mascotas',
     schema: {
-        properties: {
-            items: {
-                type: 'array',
-                items: { $ref: getSchemaPath(Pets) }
-            },
-            total: { type: 'number' },
-            page: { type: 'number' },
-            limit: { type: 'number' },
-            totalPages: { type: 'number' }
-        }
-    }
+      properties: {
+        items: {
+          type: 'array',
+          items: { $ref: getSchemaPath(Pets) },
+        },
+        total: { type: 'number' },
+        page: { type: 'number' },
+        limit: { type: 'number' },
+        totalPages: { type: 'number' },
+      },
+    },
   })
   @ApiBadRequestResponse({
     description: 'Parámetros de consulta inválidos',
@@ -76,10 +86,13 @@ export class PetsController {
   })
   @Public()
   @Get()
-  async getAllPets(@Query() findPetsDto: FindPetsDto): Promise<PaginatedResponse>{
+  async getAllPets(
+    @Query() findPetsDto: FindPetsDto,
+  ): Promise<PaginatedResponse> {
     return this.petsService.findAll(findPetsDto);
   }
 
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Obtener una mascota por su ID',
     description: 'Devuelve la mascota con el ID correspondiente.',
@@ -109,6 +122,7 @@ export class PetsController {
     return this.petsService.findById(id);
   }
 
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Crear una nueva mascota',
     description: 'Crea una nueva mascota en la plataforma.',
@@ -146,6 +160,7 @@ export class PetsController {
     return this.petsService.create(createPetDto);
   }
 
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Actualizar una mascota',
     description: 'Actualiza los datos de una mascota existente.',
@@ -194,6 +209,7 @@ export class PetsController {
     return this.petsService.update(id, updatePetDto);
   }
 
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Eliminar una mascota',
     description: 'Elimina una mascota de la plataforma.',
@@ -238,5 +254,4 @@ export class PetsController {
   async deletePet(@Param('id') id: string): Promise<void> {
     return this.petsService.delete(id);
   }
-  
 }
