@@ -1,22 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsBoolean,
   IsDateString,
   IsEmail,
   IsEnum,
-  IsIn,
   IsNotEmpty,
-  IsOptional,
   IsString,
   Length,
   Matches,
 } from 'class-validator';
 import { Genders } from 'src/common/enums/genders.enum';
-import { Role } from 'src/common/enums/roles.enum';
 
 export class RegisterUserDto {
   @ApiProperty({ example: 'John', description: 'Nombre del usuario' })
-  @IsString()
+  @IsString({ message: 'El nombre debe ser una cadena de texto' })
   @IsNotEmpty({ message: 'El nombre es requerido' })
   name!: string;
 
