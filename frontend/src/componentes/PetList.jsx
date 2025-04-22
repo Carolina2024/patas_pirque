@@ -4,7 +4,7 @@ import { usePets } from "../hook/usePets";
 const PetList = () => {
   const [page, setPage] = useState(1);
 
-  // Estado para filtros aplicados (los que se usan en la consulta)
+  // Estado para filtros aplicados
   const [filters, setFilters] = useState({
     name: '',
     species: '',
@@ -12,7 +12,7 @@ const PetList = () => {
     age: ''
   });
 
-  // Estado para inputs controlados del usuario
+  // Estado para inputs controlados
   const [inputFilters, setInputFilters] = useState(filters);
 
   // Debounce (espera 500ms después de que el usuario deja de escribir)
