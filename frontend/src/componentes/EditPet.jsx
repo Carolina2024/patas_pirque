@@ -98,14 +98,14 @@ const EditPet = ({ pet, onCancel, onSave }) => {
       <div className="col-span-6 flex justify-end gap-2 mt-1">
         <button
           type="submit"
-          className="px-2 py-1 bg-green-500 text-white rounded"
+          className="px-2 py-1 bg-green-500 text-white rounded cursor-pointer"
         >
           Guardar
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="px-2 py-1 bg-gray-300 rounded"
+          className="px-2 py-1 bg-gray-300 rounded cursor-pointer"
         >
           Cancelar
         </button>
