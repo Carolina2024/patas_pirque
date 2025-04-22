@@ -4,8 +4,35 @@ import PetList from "../componentes/PetList";
 
 const Dashboard = () => {
   const [userName, setUserName] = useState("");
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
   const [showCreatePet, setShowCreatePet] = useState(false);
   const [pets, setPets] = useState([]);
+
+  const deletePet = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`https://patas-pirque.onrender.com/pets/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        // que prevPets sea un array antes de aplicar .filter o da error
+        setPets((prevPets) =>
+          Array.isArray(prevPets) ? prevPets.filter((pet) => pet.id !== id) : []
+        );
+        alert("Mascota eliminada exitosamente");
+      } else {
+        throw new Error("Error al eliminar la mascota");
+      }
+    } catch (error) {
+      console.error("Error al eliminar mascota:", error);
+      setError(error);
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -100,7 +127,7 @@ const Dashboard = () => {
             onCancel={() => setShowCreatePet(false)}
           />
         ) : (
-          <PetList pets={pets} setPets={setPets} />
+          <PetList pets={pets} setPets={setPets} deletePet={deletePet} />
         )}
       </div>
     </div>
