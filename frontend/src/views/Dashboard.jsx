@@ -106,9 +106,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-screen">
       <div className="w-1/4 bg-primary text-white p-4">
         <h2 className="text-2xl mb-4">Panel</h2>
+
         <button
           className="mb-2 block w-full bg-white text-primary py-2 px-4 rounded cursor-pointer"
           onClick={() => setShowCreatePet(true)}
