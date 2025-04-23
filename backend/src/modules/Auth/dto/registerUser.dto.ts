@@ -47,7 +47,7 @@ export class RegisterUserDto {
   })
   @IsString({ message: 'El DNI debe ser una cadena de texto' })
   @Length(8, 8, { message: 'El DNI debe tener 8 caracteres' })
-  @IsNumberString({}, { message: 'Solo se permiten números' })
+  @IsNumberString({}, { message: 'En el DNI sólo se permiten números' })
   dni!: string;
 
   @ApiProperty({
