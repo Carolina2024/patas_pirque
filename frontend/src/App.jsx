@@ -15,22 +15,18 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
+        {/* Rutas públicas con layout público */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/pets" element={<Pets />} />
-          {/* Ruta del Dashboard protegida*/}
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-
           <Route path="*" element={<NotFound />} />
+        </Route>
+
+        {/* Ruta del Dashboard protegida*/}
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/pets" element={<Pets />} />
         </Route>
       </Routes>
     </Router>
