@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsEnum } from 'class-validator';
+import { IsNotEmpty, IsEnum, IsAlpha, Matches } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Species } from 'src/common/enums/species.enum';
 import { Ages } from 'src/common/enums/ages.enum';
@@ -7,12 +7,12 @@ import { Size } from 'src/common/enums/sizes.enum';
 export class CreatePetDto {
     @ApiProperty({ example: 'Max', description: 'Nombre de la mascota' })
     @IsNotEmpty({ message: 'El nombre es requerido' })
-    @IsString({ message: 'El nombre debe ser una cadena de texto' })
+    @Matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, { message: 'El nombre no puede contener números ni caracteres especiales'})
     name!: string;
 
     @ApiProperty({ example: 'Golden Retriever', description: 'Raza de la mascota' })
     @IsNotEmpty({ message: 'La raza es requerida' })
-    @IsString({ message: 'La raza debe ser una cadena de texto' })
+    @Matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, { message: 'La raza no puede contener números ni caracteres especiales'})
     race!: string;
 
     @ApiProperty({ 
