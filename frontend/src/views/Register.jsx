@@ -111,7 +111,7 @@ const Register = () => {
         return value ? "" : "La fecha es obligatoria";
       case "dni":
         if (!value.trim()) return "El documento es obligatorio";
-        if (!/^\d{6}$/.test(value)) return "Debe tener 6 números exactos";
+        if (!/^\d{8}$/.test(value)) return "Debe tener 8 números exactos";
         return "";
       case "gender":
         return value ? "" : "Seleccione un género";
@@ -127,7 +127,7 @@ const Register = () => {
             value
           )
         ) {
-          return "Debe tener mínimo 8 caracteres, letras, números y símbolos. Ej: hola123!";
+          return "Debe tener mínimo 6 caracteres, letras, números y símbolos. Ej: hola123!";
         }
         return "";
       default:
