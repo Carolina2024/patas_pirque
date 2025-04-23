@@ -38,7 +38,7 @@ const Navbar = () => {
               </Link>
               <Link to="/register">
                 <button className="bg-secundary text-tertiary px-4 py-2 rounded-lg hover:bg-primary hover:text-white cursor-pointer">
-                  Register
+                  Registrarse
                 </button>
               </Link>
             </>

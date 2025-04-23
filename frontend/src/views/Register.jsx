@@ -127,7 +127,7 @@ const Register = () => {
             value
           )
         ) {
-          return "Debe tener mínimo 6 caracteres, letras, números y símbolos. Ej: hola123!";
+          return "Debe tener mínimo 8 caracteres, letras, números y símbolos. Ej: hola123!";
         }
         return "";
       default:
@@ -148,7 +148,7 @@ const Register = () => {
     <div className="m-10 flex items-center justify-center bg-secundary">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg">
         <h2 className="text-2xl font-bold mb-6 text-center text-tertiary">
-          Regístrate
+          Crear cuenta
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
