@@ -7,12 +7,14 @@ import { Size } from 'src/common/enums/sizes.enum';
 export class CreatePetDto {
     @ApiProperty({ example: 'Max', description: 'Nombre de la mascota' })
     @IsNotEmpty({ message: 'El nombre es requerido' })
-    @IsString({ message: 'El nombre debe ser una cadena de texto' })
+    @Trim()
+    @IsNotEmpty()
+    @Matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/, { message: 'El nombre no puede contener números ni caracteres especiales'})
     name!: string;
 
     @ApiProperty({ example: 'Golden Retriever', description: 'Raza de la mascota' })
     @IsNotEmpty({ message: 'La raza es requerida' })
-    @IsString({ message: 'La raza debe ser una cadena de texto' })
+    @IsAlpha('es-ES', { message: 'La raza solo puede contener letras (sin espacios ni números)' })
     race!: string;
 
     @ApiProperty({ 
