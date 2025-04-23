@@ -4,9 +4,10 @@
     <p align="center">¡AYÚDANOS A DARLES UN HOGAR!</p>
   </p>
 
+
 ## 📄 Descripción
 
-Este repositorio contiene la implementación de una aplicacion Patas Pirque es una plataforma web innovadora que conecta a personas comprometidas con la adopción responsable de animales. Con una interfaz intuitiva y funcionalidades específicas, la aplicación optimiza el proceso de búsqueda, facilitando el acceso a información sobre mascotas rescatadas y rehabilitadas.
+Este repositorio contiene la implementación de una aplicación Patas Pirque es una plataforma web innovadora que conecta a personas comprometidas con la adopción responsable de animales. Con una interfaz intuitiva y funcionalidades específicas, la aplicación optimiza el proceso de búsqueda, facilitando el acceso a información sobre mascotas rescatadas y rehabilitadas.
 
 
 ## 🎯 Objetivo Principal
