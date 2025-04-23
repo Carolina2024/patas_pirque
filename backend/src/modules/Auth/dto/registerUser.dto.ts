@@ -4,6 +4,7 @@ import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
+  IsNumberString,
   IsString,
   Length,
   Matches,
@@ -14,11 +15,17 @@ export class RegisterUserDto {
   @ApiProperty({ example: 'John', description: 'Nombre del usuario' })
   @IsString({ message: 'El nombre debe ser una cadena de texto' })
   @IsNotEmpty({ message: 'El nombre es requerido' })
+  @Matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/, {
+    message: 'El nombre solo debe contener letras',
+  })
   name!: string;
 
   @ApiProperty({ example: 'Doe', description: 'Apellido del usuario' })
   @IsString({ message: 'El apellido debe ser una cadena de texto' })
   @IsNotEmpty({ message: 'El apellido es requerido' })
+  @Matches(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/, {
+    message: 'El lastname solo debe contener letras',
+  })
   lastName!: string;
 
   @ApiProperty({
@@ -40,6 +47,7 @@ export class RegisterUserDto {
   })
   @IsString({ message: 'El DNI debe ser una cadena de texto' })
   @Length(8, 8, { message: 'El DNI debe tener 8 caracteres' })
+  @IsNumberString({}, { message: 'Solo se permiten números' })
   dni!: string;
 
   @ApiProperty({
