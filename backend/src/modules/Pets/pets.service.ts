@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { Like, Repository } from 'typeorm';
 import { Pets } from './pets.entity';
 import { CreatePetDto } from './dto/create-pet.dto';
@@ -65,6 +65,17 @@ export class PetsService {
     }
   
     async create(createPetDto: CreatePetDto): Promise<Pets> {
+      const existingPet = await this.petsRepository.findOne({
+        where: { name: createPetDto.name,
+                species: createPetDto.species,
+                race: createPetDto.race,
+                age: createPetDto.age,
+                size: createPetDto.size
+         }
+      })
+      if(existingPet){
+        throw new ConflictException('Ya existe una mascota con los mismos datos');
+      }
       const pet = this.petsRepository.create(createPetDto);
       return this.petsRepository.save(pet);
     }

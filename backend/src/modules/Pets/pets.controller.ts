@@ -9,6 +9,7 @@ import {
   UseGuards,
   Query,
   HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { Pets } from './pets.entity';
@@ -156,6 +157,7 @@ export class PetsController {
   })
   @Roles(Role.ADMIN)
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   async createPet(@Body() createPetDto: CreatePetDto): Promise<Pets> {
     return this.petsService.create(createPetDto);
   }
